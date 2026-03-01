@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Perspectives — Gangesh Chawla</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300;1,9..144,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{--bg:#09090b;--surface:#111113;--border:#1f1f24;--ink:#f0eff0;--muted:#71717a;--accent:#e8c547;--accent2:#4ade80;--warm:#fb923c;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;font-weight:300;overflow-x:hidden;}
+    a{color:inherit;text-decoration:none;}
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 64px;height:64px;display:flex;align-items:center;justify-content:space-between;background:rgba(9,9,11,0.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);}
+    .nav-logo{font-family:'Fraunces',serif;font-size:17px;font-weight:300;}
+    .nav-right{display:flex;align-items:center;gap:32px;}
+    .nav-links{display:flex;gap:32px;}
+    .nav-links a{font-size:13px;color:var(--muted);transition:color .2s;}
+    .nav-links a:hover,.nav-links a.active{color:var(--ink);}
+    .nav-cta{padding:8px 20px;background:var(--accent);color:#09090b;font-size:13px;font-weight:500;border-radius:6px;}
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;background:none;border:none;}
+    .hamburger span{display:block;width:22px;height:2px;background:var(--ink);border-radius:2px;transition:all .3s;}
+    .mobile-menu{display:none;position:fixed;top:64px;left:0;right:0;z-index:99;background:rgba(9,9,11,0.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);flex-direction:column;padding:16px 32px 24px;}
+    .mobile-menu.open{display:flex;}
+    .mobile-menu a{padding:14px 0;font-size:16px;color:var(--muted);border-bottom:1px solid var(--border);text-decoration:none;}
+    .mobile-menu a:last-child{border-bottom:none;color:var(--accent);}
+
+    /* PAGE HEADER */
+    .page-header{padding:120px 64px 64px;border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+    .page-header::before{content:'';position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:64px 64px;opacity:0.25;pointer-events:none;}
+    .page-header-inner{position:relative;z-index:1;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:24px;}
+    .page-title{font-family:'Fraunces',serif;font-size:clamp(40px,5vw,72px);font-weight:300;line-height:1.05;}
+    .page-title em{font-style:italic;color:var(--accent);}
+    .page-sub{font-size:15px;color:var(--muted);max-width:420px;line-height:1.7;margin-top:16px;}
+    .filter-bar{display:flex;gap:8px;flex-wrap:wrap;}
+    .filter-btn{padding:7px 18px;border:1px solid var(--border);border-radius:100px;font-size:12px;color:var(--muted);cursor:pointer;transition:all .2s;background:none;font-family:'DM Sans',sans-serif;}
+    .filter-btn:hover,.filter-btn.active{border-color:var(--accent);color:var(--accent);background:#e8c54710;}
+
+    /* TAGS */
+    .a-tag{display:inline-block;padding:3px 10px;border-radius:100px;font-size:11px;}
+    .t-healthcare{background:#fb923c15;color:var(--warm);border:1px solid #fb923c30;}
+    .t-strategy{background:#e8c54715;color:var(--accent);border:1px solid #e8c54730;}
+    .t-mba{background:#a78bfa15;color:#a78bfa;border:1px solid #a78bfa30;}
+    .t-books{background:#4ade8015;color:var(--accent2);border:1px solid #4ade8030;}
+
+    /* FEATURED — single */
+    .featured-section{padding:64px;border-bottom:1px solid var(--border);}
+    .featured-label{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:32px;}
+    .featured-card{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden;text-decoration:none;color:inherit;transition:opacity .2s;}
+    .featured-card:hover{opacity:0.88;}
+    .featured-img{background:var(--surface);min-height:360px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+    .featured-img img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;}
+    .featured-img .ph{font-size:64px;opacity:0.1;}
+    .featured-content{background:var(--surface);padding:48px;display:flex;flex-direction:column;justify-content:space-between;}
+    .feat-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;}
+    .featured-title{font-family:'Fraunces',serif;font-size:clamp(22px,2.5vw,34px);font-weight:300;line-height:1.25;margin-bottom:16px;}
+    .featured-excerpt{font-size:15px;line-height:1.8;color:var(--muted);}
+    .read-arrow{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--accent);margin-top:20px;}
+    .featured-meta{margin-top:32px;display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--muted);}
+
+    /* FEATURED — multiple */
+    .featured-multi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+    .featured-multi-card{background:var(--surface);display:flex;flex-direction:column;text-decoration:none;color:inherit;transition:background .2s;}
+    .featured-multi-card:hover{background:#161618;}
+    .fmc-img{width:100%;height:200px;background:var(--bg);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+    .fmc-img img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;}
+    .fmc-img .ph{font-size:32px;opacity:0.15;}
+    .fmc-body{padding:28px 32px;flex:1;display:flex;flex-direction:column;}
+    .fmc-title{font-family:'Fraunces',serif;font-size:20px;font-weight:300;line-height:1.3;margin:12px 0 10px;}
+    .fmc-excerpt{font-size:13px;line-height:1.75;color:var(--muted);flex:1;}
+    .fmc-meta{display:flex;gap:16px;font-size:11px;color:var(--muted);margin-top:20px;}
+
+    /* ARTICLES GRID */
+    .articles-section{padding:64px;}
+    .articles-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+    .article-card{background:var(--surface);padding:32px;display:flex;flex-direction:column;text-decoration:none;color:inherit;transition:background .2s;}
+    .article-card:hover{background:#161618;}
+    .article-thumb{width:100%;height:180px;background:var(--bg);border-radius:8px;margin-bottom:20px;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;}
+    .article-thumb img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;}
+    .article-thumb .ph{font-size:32px;opacity:0.15;}
+    .card-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;}
+    .article-title{font-family:'Fraunces',serif;font-size:18px;font-weight:300;line-height:1.3;margin-bottom:10px;flex:1;}
+    .article-excerpt{font-size:13px;line-height:1.7;color:var(--muted);margin-bottom:20px;}
+    .article-footer{display:flex;justify-content:space-between;align-items:center;margin-top:auto;font-size:11px;color:var(--muted);}
+
+    /* EMPTY */
+    .empty-section{padding:64px;text-align:center;}
+    .empty-icon{font-size:48px;margin-bottom:20px;opacity:0.25;}
+    .empty-title{font-family:'Fraunces',serif;font-size:24px;font-weight:300;color:var(--muted);margin-bottom:8px;}
+    .empty-sub{font-size:14px;color:var(--muted);}
+
+    /* SUBSCRIBE */
+    .subscribe-wrap{padding:0 64px 64px;}
+    .subscribe-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:48px;max-width:660px;}
+    .subscribe-title{font-family:'Fraunces',serif;font-size:24px;font-weight:300;margin-bottom:8px;}
+    .subscribe-title em{font-style:italic;color:var(--accent);}
+    .subscribe-sub{font-size:14px;color:var(--muted);margin-bottom:24px;}
+    .subscribe-form{display:flex;gap:10px;flex-wrap:wrap;}
+    .subscribe-form input{flex:1;min-width:140px;padding:12px 16px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--ink);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color .2s;}
+    .subscribe-form input:focus{border-color:var(--accent);}
+    .btn-yellow{background:var(--accent);color:#09090b;padding:12px 24px;border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;}
+    .subscribe-success{display:none;font-size:13px;color:var(--accent2);margin-top:12px;}
+
+    footer{padding:28px 64px;display:flex;justify-content:space-between;font-size:12px;color:var(--muted);border-top:1px solid var(--border);}
+
+    /* RESPONSIVE */
+    @media(max-width:900px){
+      nav{padding:0 24px;}
+      .nav-links{display:none;}
+      .nav-cta{display:none;}
+      .hamburger{display:flex;}
+      .page-header{padding:100px 24px 48px;}
+      .featured-section{padding:40px 24px;}
+      .articles-section{padding:40px 24px;}
+      .subscribe-wrap{padding:0 24px 48px;}
+      .featured-card{grid-template-columns:1fr;}
+      .featured-img{min-height:220px;}
+      .featured-content{padding:28px;}
+      .articles-grid{grid-template-columns:1fr 1fr;}
+      .featured-multi-grid{grid-template-columns:1fr;}
+      footer{padding:24px;flex-direction:column;gap:8px;}
+    }
+    @media(max-width:560px){
+      .articles-grid{grid-template-columns:1fr;}
+      .featured-multi-grid{grid-template-columns:1fr;}
+      .filter-bar{gap:6px;}
+      .filter-btn{padding:6px 12px;font-size:11px;}
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Gangesh Chawla</a>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="perspectives.html" class="active">Perspectives</a>
+      <a href="about.html">About</a>
+    </div>
+    <a href="index.html#contact" class="nav-cta">Say hi →</a>
+    <button class="hamburger" id="gc-ham" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-menu" id="gc-mob">
+  <a href="perspectives.html">Perspectives</a>
+  <a href="about.html">About</a>
+  <a href="index.html#contact">Say hi →</a>
+</div>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <div>
+      <h1 class="page-title">My<br/><em>Perspectives.</em></h1>
+      <p class="page-sub">Essays on healthcare strategy, building communities, and lessons from the ground level. No fluff.</p>
+    </div>
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="filterArticles('all',this)">All</button>
+      <button class="filter-btn" onclick="filterArticles('Healthcare',this)">Healthcare</button>
+      <button class="filter-btn" onclick="filterArticles('Strategy',this)">Strategy</button>
+      <button class="filter-btn" onclick="filterArticles('MBA Experience',this)">MBA Experience</button>
+      <button class="filter-btn" onclick="filterArticles('Book Summary',this)">Book Summaries</button>
+    </div>
+  </div>
+</div>
+
+<div id="featuredSection" class="featured-section">
+  <div class="featured-label">Featured</div>
+  <div id="featuredContainer"></div>
+</div>
+
+<div class="articles-section" id="articlesSection">
+  <div id="articlesContainer"></div>
+</div>
+
+<div id="emptySection" class="empty-section" style="display:none;">
+  <div class="empty-icon">✍️</div>
+  <div class="empty-title">No articles yet</div>
+  <div class="empty-sub">Check back soon — essays are on the way.</div>
+</div>
+
+<div class="subscribe-wrap">
+  <div class="subscribe-box">
+    <div class="subscribe-title">Get new articles <em>in your inbox.</em></div>
+    <p class="subscribe-sub">No spam. Just thoughtful essays when I publish something new.</p>
+    <div class="subscribe-form">
+      <input type="text" id="subName" placeholder="Your name"/>
+      <input type="email" id="subEmail" placeholder="Your email"/>
+      <button class="btn-yellow" onclick="subscribeW()">Subscribe →</button>
+    </div>
+    <p class="subscribe-success" id="subSuccessW">✓ You're subscribed!</p>
+  </div>
+</div>
+
+<footer>
+  <span>© 2025 Gangesh Chawla</span>
+  <a href="about.html" style="color:var(--muted)">Full profile →</a>
+</footer>
+
+<script>
+  const SUBSCRIBE_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL';
+  const TAG_CLASS = { Healthcare:'t-healthcare', Strategy:'t-strategy', 'MBA Experience':'t-mba', 'Book Summary':'t-books' };
+
+  // Safari-safe storage
+  // Fetch from articles.json (works for all visitors on all devices)
+  // Falls back to localStorage for local preview/admin use
+  async function loadArticles() {
+    try {
+      const res = await fetch('articles.json?v=' + Date.now());
+      if (res.ok) {
+        const data = await res.json();
+        return data;
+      }
+    } catch(e) {}
+    // fallback to localStorage (admin preview only)
+    try { return JSON.parse(localStorage.getItem('gc_articles') || '[]'); } catch { return []; }
+  } catch(e) {
+      try {
+        const raw = sessionStorage.getItem('gc_articles');
+        return raw ? JSON.parse(raw) : [];
+      } catch(e2) {
+        return [];
+      }
+    }
+  } catch { return []; }
+  }
+
+  function tagHTML(tags) {
+    if (!tags) return '';
+    const arr = Array.isArray(tags) ? tags : [tags];
+    return arr.map(t => `<span class="a-tag ${TAG_CLASS[t]||'t-healthcare'}">${t}</span>`).join('');
+  }
+
+  function formatDate(d) {
+    return new Date(d).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});
+  }
+
+  function render(articles) {
+    const featured = articles.filter(a => a.featured);
+    const rest = articles.filter(a => !a.featured);
+
+    // Featured section
+    const fs = document.getElementById('featuredSection');
+    const fc = document.getElementById('featuredContainer');
+    if (featured.length === 0) {
+      fs.style.display = 'none';
+    } else if (featured.length === 1) {
+      fs.style.display = 'block';
+      const a = featured[0];
+      fc.innerHTML = `<a class="featured-card" href="article.html?id=${a.id}">
+        <div class="featured-img">${a.coverImage ? `<img src="${a.coverImage}" alt=""/>` : '<span class="ph">📝</span>'}</div>
+        <div class="featured-content">
+          <div>
+            <div class="feat-tags">${tagHTML(a.tags)}</div>
+            <div class="featured-title">${a.title}</div>
+            <div class="featured-excerpt">${a.excerpt}</div>
+            <div class="read-arrow">Read article →</div>
+          </div>
+          <div class="featured-meta">
+            <span>${formatDate(a.date)}</span>
+            <span>${a.readTime} min read</span>
+          </div>
+        </div>
+      </a>`;
+    } else {
+      fs.style.display = 'block';
+      fc.innerHTML = `<div class="featured-multi-grid">${featured.map(a => `
+        <a class="featured-multi-card" href="article.html?id=${a.id}">
+          <div class="fmc-img">${a.coverImage ? `<img src="${a.coverImage}" alt=""/>` : '<span class="ph">📝</span>'}</div>
+          <div class="fmc-body">
+            <div class="feat-tags">${tagHTML(a.tags)}</div>
+            <div class="fmc-title">${a.title}</div>
+            <div class="fmc-excerpt">${a.excerpt}</div>
+            <div class="fmc-meta"><span>${formatDate(a.date)}</span><span>${a.readTime} min read</span></div>
+          </div>
+        </a>`).join('')}
+      </div>`;
+    }
+
+    // Articles grid
+    const as = document.getElementById('articlesSection');
+    const ac = document.getElementById('articlesContainer');
+    const empty = document.getElementById('emptySection');
+
+    if (!rest.length && !featured.length) {
+      as.style.display = 'none';
+      empty.style.display = 'block';
+      return;
+    }
+    empty.style.display = 'none';
+    if (!rest.length) { as.style.display = 'none'; return; }
+    as.style.display = 'block';
+    ac.innerHTML = `<div class="articles-grid">${rest.map(a => `
+      <a class="article-card" href="article.html?id=${a.id}">
+        <div class="article-thumb">${a.coverImage ? `<img src="${a.coverImage}" alt=""/>` : '<span class="ph">📝</span>'}</div>
+        <div class="card-tags">${tagHTML(a.tags)}</div>
+        <div class="article-title">${a.title}</div>
+        <div class="article-excerpt">${a.excerpt}</div>
+        <div class="article-footer">
+          <span>${formatDate(a.date)}</span>
+          <span>${a.readTime} min read</span>
+        </div>
+      </a>`).join('')}
+    </div>`;
+  }
+
+  function filterArticles(cat, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    loadArticles().then(all => {
+      const filtered = cat === 'all' ? all : all.filter(a => Array.isArray(a.tags) ? a.tags.includes(cat) : a.tags === cat);
+      render(filtered);
+    });
+  }
+
+  async function subscribeW() {
+    const name  = document.getElementById('subName').value.trim();
+    const email = document.getElementById('subEmail').value.trim();
+    if (!email) { alert('Please enter your email.'); return; }
+    try {
+      await fetch(SUBSCRIBE_URL + '?name=' + encodeURIComponent(name||'Friend') + '&email=' + encodeURIComponent(email));
+      document.getElementById('subSuccessW').style.display = 'block';
+      document.getElementById('subName').value = '';
+      document.getElementById('subEmail').value = '';
+    } catch(e) { alert('Something went wrong. Please try again.'); }
+  }
+
+  function toggleMenu() {
+    document.getElementById('gc-ham').classList.toggle('open');
+    document.getElementById('gc-mob').classList.toggle('open');
+  }
+
+  loadArticles().then(articles => render(articles));
+</script>
+</body>
+</html>
