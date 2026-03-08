@@ -1,15 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YVV9ML4HJK"></script>
-  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-YVV9ML4HJK');</script>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>About Gangesh Chawla</title>
+  <title>Gangesh Chawla</title>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YVV9ML4HJK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-YVV9ML4HJK');
+  </script>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300;1,9..144,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     :root{--bg:#09090b;--surface:#111113;--border:#1f1f24;--ink:#f2f2f2;--muted:#b4b4bc;--accent:#e8c547;--accent2:#4ade80;--warm:#fb923c;}
+    html{scroll-behavior:smooth;}
     body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;font-weight:400;overflow-x:hidden;}
     a{color:inherit;text-decoration:none;}
 
@@ -21,79 +28,106 @@
     .nav-links a:hover,.nav-links a.active{color:var(--ink);}
     .nav-cta{padding:8px 20px;background:var(--accent);color:#09090b;font-size:13px;font-weight:500;border-radius:6px;}
     .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;background:none;border:none;}
-    .hamburger span{display:block;width:22px;height:2px;background:var(--ink);border-radius:2px;}
+    .hamburger span{display:block;width:22px;height:2px;background:var(--ink);border-radius:2px;transition:all .3s;}
     .mobile-menu{display:none;position:fixed;top:64px;left:0;right:0;z-index:99;background:rgba(9,9,11,0.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);flex-direction:column;padding:16px 32px 24px;}
     .mobile-menu.open{display:flex;}
-    .mobile-menu a{padding:14px 0;font-size:16px;color:var(--muted);border-bottom:1px solid var(--border);}
+    .mobile-menu a{padding:14px 0;font-size:16px;color:var(--muted);border-bottom:1px solid var(--border);text-decoration:none;}
     .mobile-menu a:last-child{border-bottom:none;color:var(--accent);}
 
-    /* HERO */
     .hero{min-height:100vh;padding:0 64px;display:flex;align-items:center;border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
-    .hero::after{content:'';position:absolute;width:600px;height:600px;background:radial-gradient(circle,#e8c54710 0%,transparent 65%);top:50%;right:5%;transform:translateY(-50%);pointer-events:none;}
-    .hero-inner{position:relative;z-index:1;max-width:800px;}
-    .hero-eyebrow{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:32px;}
-    .hero-name{font-family:'Fraunces',serif;font-size:clamp(32px,4vw,56px);font-weight:300;line-height:1.0;letter-spacing:-0.02em;margin-bottom:48px;}
-    .hero-name em{font-style:italic;color:var(--accent);}
-    .hero-lines{display:flex;flex-direction:column;gap:12px;}
-    .hero-line{font-size:clamp(16px,1.6vw,20px);line-height:1.5;color:var(--muted);}
-    .hero-line strong{color:var(--ink);font-weight:400;}
+    .hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:64px 64px;opacity:0.35;pointer-events:none;}
+    .hero::after{content:'';position:absolute;width:700px;height:700px;background:radial-gradient(circle,#e8c54712 0%,transparent 65%);top:40%;left:55%;transform:translate(-50%,-50%);pointer-events:none;}
+    .hero-content{position:relative;z-index:1;max-width:920px;}
+    .hero-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border:1px solid var(--border);border-radius:100px;margin-bottom:40px;font-size:12px;color:var(--muted);opacity:0;animation:up .6s .1s forwards;}
+    .dot{width:6px;height:6px;border-radius:50%;background:var(--accent2);box-shadow:0 0 8px var(--accent2);}
+    .hero h1{font-family:'Fraunces',serif;font-size:clamp(52px,7.5vw,100px);font-weight:300;line-height:1.04;letter-spacing:-0.02em;opacity:0;animation:up .8s .2s forwards;}
+    .hero h1 em{font-style:italic;color:var(--accent);}
+    .hero-sub{margin-top:32px;font-size:clamp(15px,1.4vw,18px);line-height:1.75;color:var(--muted);max-width:580px;opacity:0;animation:up .8s .4s forwards;}
+    .hero-sub strong{color:var(--ink);font-weight:400;}
+    .hero-stats{margin-top:56px;display:flex;gap:52px;flex-wrap:wrap;opacity:0;animation:up .8s .55s forwards;}
+    .stat-num{font-family:'Fraunces',serif;font-size:38px;font-weight:300;line-height:1;}
+    .stat-num span{color:var(--accent);}
+    .stat-label{font-size:12px;color:var(--muted);margin-top:6px;}
+    .hero-actions{margin-top:52px;display:flex;gap:14px;flex-wrap:wrap;opacity:0;animation:up .8s .7s forwards;}
+    @keyframes up{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:none;}}
 
-    /* SECTIONS */
-    .section{padding:80px 64px;border-bottom:1px solid var(--border);max-width:100%;}
-    .sec-inner{max-width:900px;}
-    .sec-eyebrow{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:40px;}
-    
-    /* BELIEFS */
-    .belief-list{display:flex;flex-direction:column;gap:0;}
-    .belief-item{display:grid;grid-template-columns:48px 1fr;gap:24px;align-items:baseline;padding:28px 0;border-bottom:1px solid var(--border);}
-    .belief-item:last-child{border-bottom:none;}
-    .belief-num{font-family:'Fraunces',serif;font-size:13px;color:var(--muted);font-style:italic;}
-    .belief-text{font-size:17px;line-height:1.5;color:var(--ink);}
-    .belief-text span{color:var(--muted);}
-
-    /* CAREER */
-    .career-list{display:flex;flex-direction:column;gap:0;}
-    .career-item{display:grid;grid-template-columns:1fr auto;gap:32px;align-items:baseline;padding:24px 0;border-bottom:1px solid var(--border);}
-    .career-item:last-child{border-bottom:none;}
-    .career-left{}
-    .career-org{font-size:12px;color:var(--muted);margin-bottom:6px;letter-spacing:0.04em;}
-    .career-role{font-size:17px;color:var(--ink);}
-    .career-year{font-size:12px;color:var(--muted);white-space:nowrap;}
-
-    /* ELSEWHERE */
-    .elsewhere-list{display:flex;flex-direction:column;gap:0;}
-    .elsewhere-item{display:grid;grid-template-columns:32px 1fr;gap:20px;align-items:center;padding:22px 0;border-bottom:1px solid var(--border);}
-    .elsewhere-item:last-child{border-bottom:none;}
-    .elsewhere-icon{font-size:18px;}
-    .elsewhere-text{font-size:16px;color:var(--muted);}
-    .elsewhere-text strong{color:var(--ink);font-weight:400;}
-
-    /* CONTACT */
-    .contact-section{padding:80px 64px;}
-    .contact-inner{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;max-width:900px;}
-    .contact-title{font-family:'Fraunces',serif;font-size:clamp(32px,3vw,52px);font-weight:300;line-height:1.1;margin-bottom:32px;}
-    .contact-title em{font-style:italic;color:var(--accent);}
-    .btn{padding:13px 28px;font-family:'DM Sans',sans-serif;font-size:14px;border-radius:8px;display:inline-block;border:none;cursor:pointer;}
+    .btn{padding:13px 28px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:400;border-radius:8px;transition:all .2s;display:inline-block;cursor:pointer;border:none;}
     .btn-yellow{background:var(--accent);color:#09090b;}
     .btn-yellow:hover{opacity:0.88;}
+    .btn-outline{border:1px solid var(--border);color:var(--ink);background:transparent;}
+    .btn-outline:hover{border-color:var(--muted);}
+
+    .section{padding:96px 64px;border-bottom:1px solid var(--border);}
+    .sec-eyebrow{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;}
+    .sec-title{font-family:'Fraunces',serif;font-size:clamp(30px,3vw,48px);font-weight:300;line-height:1.15;margin-bottom:56px;}
+    .sec-title em{font-style:italic;}
+
+    .now-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+    .now-card{background:var(--surface);padding:32px 28px;transition:background .2s;}
+    .now-card:hover{background:#161618;}
+    .now-icon{font-size:22px;margin-bottom:16px;}
+    .now-label{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
+    .now-text{font-size:14px;line-height:1.8;color:var(--muted);}
+    .now-text strong{color:var(--ink);font-weight:400;}
+
+    .featured-list{display:flex;flex-direction:column;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+    .feat-item{display:grid;grid-template-columns:1fr 180px;gap:32px;align-items:start;padding:32px;background:var(--surface);cursor:pointer;transition:background .2s;text-decoration:none;color:inherit;}
+    .feat-item:hover{background:#161618;}
+    .feat-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;}
+    .a-tag{display:inline-block;padding:3px 10px;border-radius:100px;font-size:11px;}
+    .t-healthcare{background:#fb923c15;color:var(--warm);border:1px solid #fb923c30;}
+    .t-strategy{background:#e8c54715;color:var(--accent);border:1px solid #e8c54730;}
+    .t-mba{background:#a78bfa15;color:#a78bfa;border:1px solid #a78bfa30;}
+    .t-books{background:#4ade8015;color:var(--accent2);border:1px solid #4ade8030;}
+    .feat-star{display:inline-block;padding:3px 10px;border-radius:100px;font-size:11px;background:#e8c54715;color:var(--accent);border:1px solid #e8c54730;}
+    .feat-title{font-family:'Fraunces',serif;font-size:20px;font-weight:300;line-height:1.3;margin-bottom:10px;}
+    .feat-excerpt{font-size:13px;line-height:1.75;color:var(--muted);}
+    .feat-right{text-align:right;padding-top:4px;}
+    .feat-date{display:block;font-size:12px;color:var(--muted);margin-bottom:6px;}
+    .feat-read{display:block;font-size:12px;color:var(--muted);}
+    .writing-empty{padding:48px;text-align:center;background:var(--surface);}
+    .writing-empty-icon{font-size:36px;margin-bottom:16px;opacity:0.3;}
+    .writing-empty-text{font-size:14px;color:var(--muted);}
+
+    .subscribe-section{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:48px;margin-top:56px;}
+    .subscribe-title{font-family:'Fraunces',serif;font-size:26px;font-weight:300;margin-bottom:8px;}
+    .subscribe-title em{font-style:italic;color:var(--accent);}
+    .subscribe-sub{font-size:14px;color:var(--muted);margin-bottom:28px;}
+    .subscribe-form{display:flex;gap:12px;flex-wrap:wrap;}
+    .subscribe-form input{flex:1;min-width:160px;padding:13px 16px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--ink);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border-color .2s;}
+    .subscribe-form input:focus{border-color:var(--accent);}
+    .subscribe-success{display:none;font-size:14px;color:var(--accent2);margin-top:12px;}
+
+    .contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;}
+    .contact-title{font-family:'Fraunces',serif;font-size:clamp(30px,3vw,46px);font-weight:300;line-height:1.2;margin-bottom:20px;}
+    .contact-title em{font-style:italic;color:var(--accent);}
+    .contact-sub{font-size:15px;line-height:1.8;color:var(--muted);margin-bottom:36px;}
     .contact-links{display:flex;flex-direction:column;gap:8px;}
     .c-link{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:14px;transition:border-color .2s,background .2s;}
     .c-link:hover{border-color:var(--muted);background:#161618;}
+    .c-link.whatsapp:hover{border-color:#25d366;}
     .c-link-left{display:flex;align-items:center;gap:10px;}
     .c-arrow{color:var(--muted);}
 
-    footer{padding:28px 64px;display:flex;justify-content:space-between;font-size:12px;color:var(--muted);border-top:1px solid var(--border);}
+    footer{padding:28px 64px;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted);border-top:1px solid var(--border);}
 
     @media(max-width:900px){
       nav{padding:0 24px;}
-      .nav-links,.nav-cta{display:none;}
+      .nav-links{display:none;}
+      .nav-cta{display:none;}
       .hamburger{display:flex;}
-      .hero{padding:120px 24px 80px;min-height:auto;}
-      .section{padding:60px 24px;}
-      .career-item{grid-template-columns:1fr;gap:4px;}
-      .contact-section{padding:60px 24px;}
-      .contact-inner{grid-template-columns:1fr;gap:40px;}
-      footer{padding:24px;flex-direction:column;gap:8px;}
+      .hero{padding:120px 24px 80px;}
+      .section{padding:64px 24px;}
+      .now-grid{grid-template-columns:1fr 1fr;}
+      .contact-wrap{grid-template-columns:1fr;gap:40px;}
+      .feat-item{grid-template-columns:1fr;}
+      .feat-right{text-align:left;}
+      .subscribe-section{padding:32px 24px;}
+      footer{padding:24px;flex-direction:column;gap:8px;text-align:center;}
+    }
+    @media(max-width:560px){
+      .now-grid{grid-template-columns:1fr;}
+      .hero-stats{gap:32px;}
     }
   </style>
 </head>
@@ -104,9 +138,9 @@
   <div class="nav-right">
     <div class="nav-links">
       <a href="/perspectives/">Perspectives</a>
-      <a href="/about/" class="active">About</a>
+      <a href="/about/">About</a>
     </div>
-    <a href="#contact" class="nav-cta">Say hi →</a>
+    <a href="#contact" onclick="toggleMenu()" class="nav-cta">Say hi →</a>
     <button class="hamburger" id="gc-ham" onclick="toggleMenu()" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
@@ -115,132 +149,138 @@
 <div class="mobile-menu" id="gc-mob">
   <a href="/perspectives/">Perspectives</a>
   <a href="/about/">About</a>
-  <a href="#contact">Say hi →</a>
+  <a href="#contact" onclick="toggleMenu()">Say hi →</a>
 </div>
 
 <section class="hero">
-  <div class="hero-inner">
-    <h1 class="hero-name">I've sat across <em>400 doctors,</em> walked hospital floors at midnight, and built strategy decks for <em>billion dollar</em> decisions.</h1>
-  </div>
-</section>
-
-<section class="section">
-  <div class="sec-inner">
-    <div class="sec-eyebrow">Here is what I learned</div>
-    <div class="belief-list">
-      <div class="belief-item">
-        <span class="belief-num">01</span>
-        <span class="belief-text"><strong>Emerging markets won't adapt Western models.</strong> <span>They'll build better ones from scratch.</span></span>
-      </div>
-      <div class="belief-item">
-        <span class="belief-num">02</span>
-        <span class="belief-text">The biggest healthcare opportunities are built <strong>for the underserved.</strong> <span>The math works volume and efficiency beat margin every time.</span></span>
-      </div>
-      <div class="belief-item">
-        <span class="belief-num">03</span>
-        <span class="belief-text">Tech should reach <strong>everyone, not just those who can afford it.</strong> <span>Distribution is the problem. Capability isn't.</span></span>
-      </div>
-      <div class="belief-item">
-        <span class="belief-num">04</span>
-        <span class="belief-text">The best strategy work starts with <strong>learning the doctor's language.</strong> <span>Frameworks come second.</span></span>
-      </div>
+  <div class="hero-content">
+    <div class="hero-badge"><span class="dot"></span> Open to conversations</div>
+    <h1>Strategy &amp; healthcare.<br/><em>Curious by nature.</em></h1>
+    <p class="hero-sub">5+ years leading growth and strategy at <strong>Medanta</strong>, <strong>Bain</strong>, and <strong>IQVIA</strong>. I write about what I learn along the way.</p>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">5<span>+</span></div><div class="stat-label">Years Experience</div></div>
+      <div class="stat"><div class="stat-num">400<span>+</span></div><div class="stat-label">Conversations with Doctors</div></div>
+      <div class="stat"><div class="stat-num">1<span>K+</span></div><div class="stat-label">Frontline Interactions with Nurses & Technicians</div></div>
+      <div class="stat"><div class="stat-num">3<span>K+</span></div><div class="stat-label">Network of Builders & Investors</div></div>
+    </div>
+    <div class="hero-actions">
+      <a href="/perspectives/" class="btn btn-yellow">Read my perspectives</a>
+      <a href="/about/" class="btn btn-outline">More about me →</a>
     </div>
   </div>
 </section>
 
 <section class="section">
-  <div class="sec-inner">
-    <div class="sec-eyebrow">Where I've worked</div>
-    <div class="career-list">
-      <div class="career-item">
-        <div class="career-left">
-          <div class="career-org">Medanta Group</div>
-          <div class="career-role">Senior Manager, Growth & Strategy (CEO's Office)</div>
-        </div>
-        <span class="career-year">2022 – 2026</span>
-      </div>
-      <div class="career-item">
-        <div class="career-left">
-          <div class="career-org">Bain</div>
-          <div class="career-role">Senior Analyst, Bain Capability Network</div>
-        </div>
-        <span class="career-year">2021 – 2022</span>
-      </div>
-      <div class="career-item">
-        <div class="career-left">
-          <div class="career-org">IQVIA</div>
-          <div class="career-role">Analyst, Pharmaceutical and Life Science Strategy</div>
-        </div>
-        <span class="career-year">2020 – 2021</span>
-      </div>
-    </div>
+  <div class="sec-eyebrow">Right now</div>
+  <div class="sec-title">What I'm doing &amp; <em>thinking about.</em></div>
+  <div class="now-grid">
+    <div class="now-card"><div class="now-icon">🎓</div><div class="now-label">Currently</div><div class="now-text">Pursuing my <strong>MBA at ISB</strong> and thinking about the future of healthcare systems in emerging markets.</div></div>
+    <div class="now-card"><div class="now-icon">💡</div><div class="now-label">Thinking about</div><div class="now-text">How <strong>emerging markets</strong> can leapfrog legacy healthcare infrastructure and what truly patient-centric systems look like.</div></div>
+    <div class="now-card"><div class="now-icon">📖</div><div class="now-label">Reading</div><div class="now-text"><strong>Behavioral economics</strong> and health outcomes. Why patients make the choices they do, and how systems can be redesigned around that.</div></div>
+    <div class="now-card"><div class="now-icon">✍️</div><div class="now-label">Writing</div><div class="now-text">Turning <strong>5 years of frontline experience</strong> in healthcare strategy into perspectives for operators and builders.</div></div>
   </div>
 </section>
 
-<section class="section">
-  <div class="sec-inner">
-    <div class="sec-eyebrow">Where I've studied</div>
-    <div class="career-list">
-      <div class="career-item">
-        <div class="career-left">
-          <div class="career-org">Indian School of Business (ISB)</div>
-          <div class="career-role">Post Graduate Programme in Management (PGP)</div>
-        </div>
-        <span class="career-year">Class of 2027</span>
-      </div>
-      <div class="career-item">
-        <div class="career-left">
-          <div class="career-org">Delhi Technological University (DTU)</div>
-          <div class="career-role">B.Tech, Production & Industrial Engineering</div>
-        </div>
-        <span class="career-year">Class of 2020</span>
-      </div>
+<section class="section" id="writing">
+  <div class="sec-eyebrow">Perspectives</div>
+  <div class="sec-title">Latest <em>perspectives</em></div>
+  <div id="featuredArticles" class="featured-list"></div>
+  <div style="margin-top:32px;">
+    <a href="/perspectives/" class="btn btn-outline">View all perspectives →</a>
+  </div>
+  <div class="subscribe-section">
+    <div class="subscribe-title">Get new perspectives <em>in your inbox.</em></div>
+    <p class="subscribe-sub">No spam. Just thoughtful writing when something new is published.</p>
+    <div class="subscribe-form">
+      <input type="text" id="subName" placeholder="Your name"/>
+      <input type="email" id="subEmail" placeholder="Your email address"/>
+      <button class="btn btn-yellow" onclick="subscribeNow()">Subscribe →</button>
     </div>
+    <p class="subscribe-success" id="subSuccess">✓ You're subscribed! Thank you.</p>
   </div>
 </section>
 
-<section class="section">
-  <div class="sec-inner">
-    <div class="sec-eyebrow">Outside of work</div>
-    <div class="elsewhere-list">
-      <div class="elsewhere-item">
-        <span class="elsewhere-icon">✈️</span>
-        <span class="elsewhere-text"><strong>Travelling.</strong> Local markets, street food, and getting genuinely lost.</span>
-      </div>
-      <div class="elsewhere-item">
-        <span class="elsewhere-icon">📚</span>
-        <span class="elsewhere-text"><strong>Reading.</strong> Behavioral economics, systems thinking, the occasional guilty pleasure.</span>
-      </div>
-      <div class="elsewhere-item">
-        <span class="elsewhere-icon">🎬</span>
-        <span class="elsewhere-text"><strong>Cinema.</strong> Slow burns. Big ideas. Good scripts.</span>
-      </div>
-      <div class="elsewhere-item">
-        <span class="elsewhere-icon">🏥</span>
-        <span class="elsewhere-text"><strong>Community.</strong> Co-running a 3,000+ member healthcare network of doctors, founders, and investors.</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="contact-section" id="contact">
-  <div class="contact-inner">
+<section class="section" id="contact">
+  <div class="contact-wrap">
     <div>
-      <div class="contact-title">Let's talk<br/><em>properly.</em></div>
-      <a href="/cdn-cgi/l/email-protection#db9cbab5bcbea8b384b8b3baacb7ba84abbcabe9ebe9ecfdf8edefe0b2a8b9f5bebfae" class="btn btn-yellow">Send me an email</a>
+      <div class="sec-eyebrow">Contact</div>
+      <div class="contact-title">Let's have a<br/><em>real conversation.</em></div>
+      <p class="contact-sub">Healthcare, strategy, community building, or something completely different. Always happy to connect.</p>
+      <a href="/cdn-cgi/l/email-protection#8dcaece3eae8fee5d2eee5ecfae1ecd2fdeafdbfbdbfbaabaebbb9b6e4feefa3e8e9f8" class="btn btn-yellow">Send me an email</a>
     </div>
     <div class="contact-links">
-      <a href="/cdn-cgi/l/email-protection#aee9cfc0c9cbddc6f1cdc6cfd9c2cff1dec9de9c9e9c99888d989a95c7ddcc80cbcadb" class="c-link"><div class="c-link-left"><span>✉️</span> E-Mail</div><span class="c-arrow">↗</span></a>
+      <a href="/cdn-cgi/l/email-protection#d89fb9b6bfbdabb087bbb0b9afb4b987a8bfa8eae8eaeffefbeeece3b1abbaf6bdbcad" class="c-link"><div class="c-link-left"><span>✉️</span> E-Mail</div><span class="c-arrow">↗</span></a>
       <a href="https://linkedin.com/in/gangesh-chawla/" target="_blank" class="c-link"><div class="c-link-left"><span>💼</span> LinkedIn</div><span class="c-arrow">↗</span></a>
-      <a href="https://wa.me/918700314908?text=Hi%20Gangesh%2C%20I%20came%20across%20your%20website!" target="_blank" class="c-link"><div class="c-link-left"><span>💬</span> WhatsApp</div><span class="c-arrow">↗</span></a>
+      <a href="https://wa.me/918700314908?text=Hi%20Gangesh%2C%20I%20came%20across%20your%20website!" target="_blank" class="c-link whatsapp"><div class="c-link-left"><span>💬</span> WhatsApp</div><span class="c-arrow">↗</span></a>
     </div>
   </div>
 </section>
 
 <footer>
-  <span>© 2025 Gangesh Chawla</span>
-  <a href="/" style="color:var(--muted)">← Back home</a>
+  <span>© 2026 Gangesh Chawla</span>
+  <a href="/about/" style="color:var(--muted)">Full profile →</a>
 </footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  const SUBSCRIBE_URL = 'https://script.google.com/macros/s/AKfycbxTe5cpbv3UbevtaCFX1eChNKowsgwbHNUWU22U6TcQQv6cP2fFSJYq9Vq2a2_1BLdr/exec';
+  const TAG_CLASS = { Healthcare:'t-healthcare', Strategy:'t-strategy', 'MBA Experience':'t-mba', 'Book Summary':'t-books' };
+
+  async function loadArticles() {
+    try {
+      const res = await fetch('./articles.json?v=' + Date.now(), { cache: 'no-store' });
+      if (res.ok) return await res.json();
+    } catch(e) {}
+    try { return JSON.parse(localStorage.getItem('gc_articles') || '[]'); } catch(e) { return []; }
+  }
+
+  function tagHTML(tags) {
+    if (!tags) return '';
+    const arr = Array.isArray(tags) ? tags : [tags];
+    return arr.map(t => `<span class="a-tag ${TAG_CLASS[t]||'t-healthcare'}">${t}</span>`).join('');
+  }
+
+  function formatDate(d) {
+    return new Date(d).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});
+  }
+
+  function renderFeatured(articles) {
+    const featured = articles.filter(a => a.featured);
+    const container = document.getElementById('featuredArticles');
+    if (!featured.length) {
+      container.innerHTML = '<div class="writing-empty"><div class="writing-empty-icon">✍️</div><div class="writing-empty-text">Articles coming soon. Subscribe below to be notified.</div></div>';
+      return;
+    }
+    container.innerHTML = featured.map(a =>
+      '<a class="feat-item" href="/article/?id=' + a.id + '">' +
+        '<div>' +
+          '<div class="feat-tags"><span class="feat-star">★ Featured</span>' + tagHTML(a.tags) + '</div>' +
+          '<div class="feat-title">' + a.title + '</div>' +
+          '<div class="feat-excerpt">' + a.excerpt + '</div>' +
+        '</div>' +
+        '<div class="feat-right">' +
+          '<span class="feat-date">' + formatDate(a.date) + '</span>' +
+          '<span class="feat-read">' + a.readTime + ' min read</span>' +
+        '</div>' +
+      '</a>'
+    ).join('');
+  }
+
+  async function subscribeNow() {
+    const name  = document.getElementById('subName').value.trim();
+    const email = document.getElementById('subEmail').value.trim();
+    if (!email) { alert('Please enter your email.'); return; }
+    try {
+      await fetch(SUBSCRIBE_URL + '?name=' + encodeURIComponent(name || 'Friend') + '&email=' + encodeURIComponent(email), { method: 'GET', mode: 'no-cors' });
+      document.getElementById('subSuccess').style.display = 'block';
+      document.getElementById('subName').value = '';
+      document.getElementById('subEmail').value = '';
+    } catch(e) {
+      alert('Something went wrong. Please try again.');
+    }
+  }
+
+  loadArticles().then(renderFeatured);
+</script>
 
 <script data-cfasync="false">
 function toggleMenu(){
