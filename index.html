@@ -134,11 +134,11 @@
 <body>
 
 <nav>
-  <a href="index.html" class="nav-logo">Gangesh Chawla</a>
+  <a href="/" class="nav-logo">Gangesh Chawla</a>
   <div class="nav-right">
     <div class="nav-links">
-      <a href="perspectives.html">Perspectives</a>
-      <a href="about.html">About</a>
+      <a href="/perspectives/">Perspectives</a>
+      <a href="/about/">About</a>
     </div>
     <a href="#contact" class="nav-cta">Say hi →</a>
     <button class="hamburger" id="gc-ham" onclick="toggleMenu()" aria-label="Menu">
@@ -147,8 +147,8 @@
   </div>
 </nav>
 <div class="mobile-menu" id="gc-mob">
-  <a href="perspectives.html">Perspectives</a>
-  <a href="about.html">About</a>
+  <a href="/perspectives/">Perspectives</a>
+  <a href="/about/">About</a>
   <a href="#contact">Say hi →</a>
 </div>
 
@@ -163,8 +163,8 @@
       <div class="stat"><div class="stat-num">3<span>K+</span></div><div class="stat-label">Community Built</div></div>
     </div>
     <div class="hero-actions">
-      <a href="perspectives.html" class="btn btn-yellow">Read my perspectives</a>
-      <a href="about.html" class="btn btn-outline">More about me →</a>
+      <a href="/perspectives/" class="btn btn-yellow">Read my perspectives</a>
+      <a href="/about/" class="btn btn-outline">More about me →</a>
     </div>
   </div>
 </section>
@@ -185,7 +185,7 @@
   <div class="sec-title">Thoughts &amp; <em>perspectives</em></div>
   <div id="featuredArticles" class="featured-list"></div>
   <div style="margin-top:32px;">
-    <a href="perspectives.html" class="btn btn-outline">View all perspectives →</a>
+    <a href="/perspectives/" class="btn btn-outline">View all perspectives →</a>
   </div>
   <div class="subscribe-section">
     <div class="subscribe-title">Get new articles <em>in your inbox.</em></div>
@@ -217,7 +217,7 @@
 
 <footer>
   <span>© 2025 Gangesh Chawla</span>
-  <a href="about.html" style="color:var(--muted)">Full profile →</a>
+  <a href="/about/" style="color:var(--muted)">Full profile →</a>
 </footer>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
@@ -250,7 +250,7 @@
       return;
     }
     container.innerHTML = featured.map(a =>
-      '<a class="feat-item" href="article.html?id=' + a.id + '">' +
+      '<a class="feat-item" href="/article/?id=' + a.id + '">' +
         '<div>' +
           '<div class="feat-tags"><span class="feat-star">★ Featured</span>' + tagHTML(a.tags) + '</div>' +
           '<div class="feat-title">' + a.title + '</div>' +
