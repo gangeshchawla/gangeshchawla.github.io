@@ -3,7 +3,9 @@
     "id": "1772355870575",
     "title": "Test_Article_1",
     "excerpt": "I am just testing",
-    "category": "Community",
+    "tags": [
+      "Healthcare"
+    ],
     "readTime": 1,
     "coverImage": "",
     "body": "## I am just testing the article to ensure everything is all right\n\n---\n\nI hope it's fine\n\n---\n---\n**Not really sure though** *still let me know*",
