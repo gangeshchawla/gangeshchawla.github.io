@@ -1,279 +1,243 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-YVV9ML4HJK"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-YVV9ML4HJK');
-</script>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Article — Gangesh Chawla</title>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300;1,9..144,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YVV9ML4HJK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-YVV9ML4HJK');
+  </script>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --bg: #09090b; --surface: #111113; --border: #1f1f24;
-      --ink: #f0eff0; --muted: #71717a; --accent: #e8c547;
-      --accent2: #4ade80; --warm: #fb923c;
-    }
-    html { scroll-behavior: smooth; }
-    body { background: var(--bg); color: var(--ink); font-family: 'DM Sans', sans-serif; font-weight: 300; overflow-x: hidden; }
-    a { color: inherit; text-decoration: none; }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{--bg:#f9f9f7;--surface:#ffffff;--border:#e4e4e0;--ink:#111113;--muted:#666660;--accent:#c9a800;--accent2:#16a34a;--warm:#ea580c;}
+    html.dark{--bg:#09090b;--surface:#111113;--border:#1f1f24;--ink:#f2f2f2;--muted:#b4b4bc;--accent:#e8c547;--accent2:#4ade80;--warm:#fb923c;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;font-weight:400;overflow-x:hidden;transition:background .25s,color .25s;}
+    a{color:inherit;text-decoration:none;}
 
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 0 64px; height: 64px; display: flex; align-items: center; justify-content: space-between; background: rgba(9,9,11,0.88); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); }
-    .nav-logo { font-family: 'Fraunces', serif; font-size: 17px; font-weight: 300; }
-    .nav-right { display: flex; align-items: center; gap: 40px; }
-    .nav-links { display: flex; gap: 32px; }
-    .nav-links a { font-size: 13px; color: var(--muted); transition: color .2s; }
-    .nav-links a:hover { color: var(--ink); }
-    .nav-cta { padding: 8px 20px; background: var(--accent); color: #09090b; font-size: 13px; font-weight: 500; border-radius: 6px; }
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 64px;height:64px;display:flex;align-items:center;justify-content:space-between;background:rgba(249,249,247,0.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);transition:background .25s;}
+    html.dark nav{background:rgba(9,9,11,0.88);}
+    .nav-logo{font-family:'Fraunces',serif;font-size:17px;font-weight:300;}
+    .nav-right{display:flex;align-items:center;gap:24px;}
+    .nav-links{display:flex;gap:28px;}
+    .nav-links a{font-size:13px;color:var(--muted);transition:color .2s;}
+    .nav-links a:hover{color:var(--ink);}
+    .nav-cta{padding:8px 20px;background:var(--accent);color:#ffffff;font-size:13px;font-weight:500;border-radius:6px;transition:opacity .2s;}
+    html.dark .nav-cta{color:#09090b;}
+    .nav-cta:hover{opacity:0.88;}
+    .theme-toggle{padding:6px 14px;border:1px solid var(--border);border-radius:100px;font-size:12px;color:var(--muted);cursor:pointer;background:none;font-family:'DM Sans',sans-serif;transition:all .2s;}
+    .theme-toggle:hover{border-color:var(--accent);color:var(--accent);}
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;background:none;border:none;}
+    .hamburger span{display:block;width:22px;height:2px;background:var(--ink);border-radius:2px;transition:all .3s;}
+    .mobile-menu{display:none;position:fixed;top:64px;left:0;right:0;z-index:99;background:rgba(249,249,247,0.97);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);flex-direction:column;padding:16px 32px 24px;}
+    html.dark .mobile-menu{background:rgba(9,9,11,0.97);}
+    .mobile-menu.open{display:flex;}
+    .mobile-menu a{padding:14px 0;font-size:16px;color:var(--muted);border-bottom:1px solid var(--border);text-decoration:none;}
+    .mobile-menu a:last-child{border-bottom:none;color:var(--accent);}
 
-    /* ARTICLE HEADER */
-    .article-header { padding: 120px 64px 64px; border-bottom: 1px solid var(--border); max-width: 860px; }
-    .back-link { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); margin-bottom: 32px; transition: color .2s; }
-    .back-link:hover { color: var(--ink); }
-    .article-tag { display: inline-block; padding: 4px 12px; border-radius: 100px; font-size: 12px; margin-bottom: 24px; }
-    .t-health { background: #fb923c15; color: var(--warm); border: 1px solid #fb923c30; }
-    .t-community { background: #4ade8015; color: var(--accent2); border: 1px solid #4ade8030; }
-    .t-strategy { background: #e8c54715; color: var(--accent); border: 1px solid #e8c54730; }
-    .t-leadership { background: #a78bfa15; color: #a78bfa; border: 1px solid #a78bfa30; }
-    .t-other { background: #ffffff10; color: var(--muted); border: 1px solid var(--border); }
-    .article-title { font-family: 'Fraunces', serif; font-size: clamp(32px, 4vw, 58px); font-weight: 300; line-height: 1.1; letter-spacing: -0.01em; margin-bottom: 24px; }
-    .article-excerpt-header { font-size: 18px; line-height: 1.7; color: var(--muted); margin-bottom: 32px; max-width: 640px; }
-    .article-meta-bar { display: flex; gap: 24px; align-items: center; flex-wrap: wrap; }
-    .meta-item { font-size: 13px; color: var(--muted); }
-    .meta-sep { color: var(--border); }
+    .article-wrap{max-width:720px;margin:0 auto;padding:104px 32px 96px;}
+    .back-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);margin-bottom:40px;transition:color .2s;}
+    .back-link:hover{color:var(--ink);}
+    .article-header{margin-bottom:48px;}
+    .article-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;}
+    .a-tag{display:inline-block;padding:3px 10px;border-radius:100px;font-size:11px;}
+    .t-health{background:#fb923c15;color:var(--warm);border:1px solid #fb923c30;}
+    .t-strategy{background:#e8c54715;color:var(--accent);border:1px solid #e8c54730;}
+    .t-mba{background:#a78bfa15;color:#a78bfa;border:1px solid #a78bfa30;}
+    .t-books{background:#4ade8015;color:var(--accent2);border:1px solid #4ade8030;}
+    .article-title{font-family:'Fraunces',serif;font-size:clamp(28px,4vw,48px);font-weight:300;line-height:1.15;margin-bottom:20px;}
+    .article-meta{display:flex;align-items:center;gap:16px;font-size:13px;color:var(--muted);flex-wrap:wrap;}
+    .meta-sep{opacity:0.3;}
 
-    /* COVER IMAGE */
-    .cover-image-wrap { width: 100%; max-height: 480px; overflow: hidden; border-bottom: 1px solid var(--border); }
-    .cover-image-wrap img { width: 100%; height: 480px; object-fit: cover; display: block; }
+    .article-body{font-size:17px;line-height:1.85;color:#333330;}
+    html.dark .article-body{color:#d8d8da;}
+    .article-body p{margin-bottom:24px;}
+    .article-body h2{font-family:'Fraunces',serif;font-size:26px;font-weight:300;line-height:1.2;margin:48px 0 16px;color:var(--ink);}
+    .article-body h3{font-family:'Fraunces',serif;font-size:20px;font-weight:300;margin:36px 0 12px;color:var(--ink);}
+    .article-body blockquote{border-left:2px solid var(--accent);padding:4px 0 4px 24px;margin:36px 0;font-family:'Fraunces',serif;font-size:19px;font-style:italic;font-weight:300;line-height:1.6;color:var(--ink);}
+    .article-body ul,.article-body ol{padding-left:24px;margin-bottom:24px;}
+    .article-body li{margin-bottom:8px;}
+    .article-body a{color:var(--accent);text-decoration:underline;text-decoration-color:#e8c54740;text-underline-offset:3px;}
+    .article-body a:hover{text-decoration-color:var(--accent);}
+    .article-body strong{color:var(--ink);font-weight:500;}
+    .article-body hr{border:none;border-top:1px solid var(--border);margin:48px 0;}
 
-    /* ARTICLE BODY */
-    .article-body { display: grid; grid-template-columns: 1fr 280px; gap: 0; }
-    .article-content { padding: 64px; border-right: 1px solid var(--border); max-width: 760px; }
+    .article-divider{border:none;border-top:1px solid var(--border);margin:56px 0 40px;}
+    .author-card{display:flex;align-items:flex-start;gap:20px;padding:32px;background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:40px;}
+    .author-avatar{width:52px;height:52px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-size:20px;font-weight:300;color:#09090b;flex-shrink:0;}
+    .author-name{font-size:15px;font-weight:400;margin-bottom:4px;}
+    .author-bio{font-size:13px;line-height:1.7;color:var(--muted);}
+    .share-bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+    .share-label{font-size:13px;color:var(--muted);margin-right:4px;}
+    .share-btn{padding:8px 18px;border:1px solid var(--border);border-radius:100px;font-size:12px;color:var(--muted);cursor:pointer;background:none;font-family:'DM Sans',sans-serif;transition:all .2s;display:inline-block;}
+    .share-btn:hover{border-color:var(--accent);color:var(--accent);}
 
-    /* PROSE */
-    .prose { font-size: 17px; line-height: 1.85; color: #c4c4c8; }
-    .prose p { margin-bottom: 24px; }
-    .prose h2 { font-family: 'Fraunces', serif; font-size: 28px; font-weight: 300; color: var(--ink); margin: 48px 0 20px; line-height: 1.2; }
-    .prose h3 { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 300; color: var(--ink); margin: 36px 0 16px; }
-    .prose strong { color: var(--ink); font-weight: 500; }
-    .prose em { font-style: italic; color: var(--accent); }
-    .prose blockquote { border-left: 3px solid var(--accent); padding: 16px 24px; margin: 32px 0; background: #e8c54708; border-radius: 0 8px 8px 0; }
-    .prose blockquote p { color: var(--ink); font-size: 18px; font-style: italic; margin: 0; }
-    .prose ul, .prose ol { padding-left: 24px; margin-bottom: 24px; }
-    .prose li { margin-bottom: 10px; }
-    .prose hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+    .float-share{position:fixed;right:28px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:8px;z-index:50;}
+    .float-share-label{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;font-family:'DM Sans',sans-serif;}
+    .float-share-btn{display:flex;align-items:center;gap:10px;padding:10px 16px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--muted);font-size:13px;font-family:'DM Sans',sans-serif;cursor:pointer;text-decoration:none;transition:all .2s;white-space:nowrap;}
+    .float-share-btn:hover{border-color:var(--accent);color:var(--accent);}
+    @media(max-width:1100px){.float-share{display:none;}}
 
-    /* MEDIA BLOCKS */
-    .media-block { margin: 40px 0; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: var(--surface); }
-    .media-block-label { padding: 12px 20px; background: var(--bg); border-bottom: 1px solid var(--border); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); display: flex; align-items: center; gap: 8px; }
-    .media-block iframe { width: 100%; border: none; display: block; }
-    .media-block img { width: 100%; display: block; }
-    .media-block video { width: 100%; display: block; }
+    .loading-state{text-align:center;padding:120px 32px;color:var(--muted);font-size:15px;}
+    .error-state{text-align:center;padding:120px 32px;}
+    .error-title{font-family:'Fraunces',serif;font-size:28px;font-weight:300;margin-bottom:12px;}
+    .error-sub{font-size:14px;color:var(--muted);}
 
-    /* PHOTO GALLERY */
-    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 2px; }
-    .gallery-grid img { width: 100%; height: 180px; object-fit: cover; cursor: pointer; transition: opacity .2s; }
-    .gallery-grid img:hover { opacity: 0.8; }
+    footer{padding:28px 64px;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted);border-top:1px solid var(--border);}
 
-    /* SIDEBAR */
-    .article-sidebar { padding: 48px 32px; position: sticky; top: 64px; height: fit-content; }
-    .sidebar-section { margin-bottom: 40px; }
-    .sidebar-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
-    .sidebar-author { font-size: 14px; line-height: 1.6; color: var(--muted); }
-    .sidebar-author strong { color: var(--ink); font-weight: 400; display: block; margin-bottom: 4px; }
-    .share-links { display: flex; flex-direction: column; gap: 8px; }
-    .share-link { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; font-size: 13px; color: var(--muted); transition: all .2s; cursor: pointer; }
-    .share-link:hover { border-color: var(--muted); color: var(--ink); }
-
-    footer { padding: 28px 64px; display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); border-top: 1px solid var(--border); }
-
-    @media (max-width: 900px) {
-      nav { padding: 0 24px; } .nav-links { display: none; }
-      .article-header { padding: 100px 24px 40px; }
-      .article-body { grid-template-columns: 1fr; }
-      .article-content { padding: 40px 24px; border-right: none; }
-      .article-sidebar { display: none; }
-      footer { padding: 24px; flex-direction: column; gap: 8px; }
+    @media(max-width:900px){
+      nav{padding:0 24px;}
+      .nav-links{display:none;}
+      .hamburger{display:flex;}
+      .article-wrap{padding:88px 24px 64px;}
+      footer{padding:24px;flex-direction:column;gap:8px;text-align:center;}
     }
   </style>
 </head>
 <body>
 
+<script data-cfasync="false">
+function toggleTheme(){
+  var d=document.documentElement.classList.toggle('dark');
+  var b=document.getElementById('themeBtn');
+  if(b){b.textContent=d?'Light mode':'Dark mode';}
+  try{localStorage.setItem('gc-theme',d?'dark':'light');}catch(e){}
+}
+(function(){
+  try{
+    if(localStorage.getItem('gc-theme')==='dark'){
+      document.documentElement.classList.add('dark');
+      document.addEventListener('DOMContentLoaded',function(){
+        var b=document.getElementById('themeBtn');
+        if(b)b.textContent='Light mode';
+      });
+    }
+  }catch(e){}
+})();
+</script>
+
 <nav>
   <a href="/" class="nav-logo">Gangesh Chawla</a>
   <div class="nav-right">
     <div class="nav-links">
-      <a href="/perspectives/">Writing</a>
+      <a href="/perspectives/">Perspectives</a>
       <a href="/about/">About</a>
     </div>
-    <a href="index.html#contact" class="nav-cta">Say hi →</a>
+    <a href="/#contact" onclick="toggleMenu()" class="nav-cta">Say hi &#8594;</a>
+    <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">Dark mode</button>
+    <button class="hamburger" id="gc-ham" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
-
-<div class="article-header">
-  <a href="/perspectives/" class="back-link">← All articles</a>
-  <div id="articleTagEl"></div>
-  <h1 class="article-title" id="articleTitleEl"></h1>
-  <p class="article-excerpt-header" id="articleExcerptEl"></p>
-  <div class="article-meta-bar">
-    <span class="meta-item" id="articleDateEl"></span>
-    <span class="meta-sep">·</span>
-    <span class="meta-item" id="articleReadEl"></span>
-  </div>
+<div class="mobile-menu" id="gc-mob">
+  <a href="/perspectives/">Perspectives</a>
+  <a href="/about/">About</a>
+  <a href="/#contact" onclick="toggleMenu()">Say hi &#8594;</a>
 </div>
 
-<div id="coverImageWrap"></div>
+<div class="float-share" id="floatShare">
+  <div class="float-share-label">Share</div>
+  <a class="float-share-btn" id="linkedinShare" href="#" target="_blank">&#128188; Share on LinkedIn</a>
+  <a class="float-share-btn" id="whatsappShare" href="#" target="_blank">&#128172; Share on WhatsApp</a>
+  <button class="float-share-btn" onclick="copyLink()">&#128279; Copy link</button>
+</div>
 
-<div class="article-body">
-  <div class="article-content">
-    <div class="prose" id="articleBodyEl"></div>
-  </div>
-  <div class="article-sidebar">
-    <div class="sidebar-section">
-      <div class="sidebar-label">Written by</div>
-      <div class="sidebar-author">
-        <strong>Gangesh Chawla</strong>
-        Strategy & healthcare. 5+ years at Medanta, Bain & Company, and IQVIA.
-      </div>
-    </div>
-    <div class="sidebar-section">
-      <div class="sidebar-label">Share</div>
-      <div class="share-links">
-        <div class="share-link" onclick="shareLinkedIn()">💼 Share on LinkedIn</div>
-        <div class="share-link" onclick="shareWhatsApp()">💬 Share on WhatsApp</div>
-        <div class="share-link" onclick="copyLink()">🔗 Copy link</div>
-      </div>
-    </div>
+<div class="article-wrap">
+  <div id="articleContent">
+    <div class="loading-state">Loading...</div>
   </div>
 </div>
 
 <footer>
-  <span>© 2025 Gangesh Chawla</span>
-  <a href="/perspectives/" style="color: var(--muted);">← More articles</a>
+  <span>&#169; 2026 Gangesh Chawla</span>
+  <a href="/about/" style="color:var(--muted)">Full profile &#8594;</a>
 </footer>
 
-<script>
-  const TAG_CLASS = { Healthcare: 't-health', Strategy: 't-strategy', Community: 't-community', Leadership: 't-leadership' };
+<script data-cfasync="false">
+var TAG_CLASS = {'Healthcare':'t-health','Strategy':'t-strategy','MBA Experience':'t-mba','Book Summary':'t-books'};
+var SUBSCRIBE_URL = 'https://script.google.com/macros/s/AKfycbxTe5cpbv3UbevtaCFX1eChNKowsgwbHNUWU22U6TcQQv6cP2fFSJYq9Vq2a2_1BLdr/exec';
 
-    async function loadArticles() {
-    try {
-      // Try relative path first (works on GitHub Pages)
-      const res = await fetch('/articles.json?nocache=' + Date.now(), {cache: 'no-store'});
-      if (res.ok) {
-        const data = await res.json();
-        console.log('articles.json loaded:', data.length, 'articles');
-        return data;
-      } else {
-        console.warn('articles.json fetch failed, status:', res.status);
+function getParam(name){
+  var s=window.location.search;
+  var idx=s.indexOf(name+'=');
+  if(idx===-1)return null;
+  var start=idx+name.length+1;
+  var end=s.indexOf('&',start);
+  return decodeURIComponent(end===-1?s.slice(start):s.slice(start,end));
+}
+
+function tagHTML(tags){
+  if(!tags)return'';
+  var arr=Array.isArray(tags)?tags:[tags];
+  return arr.map(function(t){
+    var cls=TAG_CLASS[t]||'t-health';
+    return'<span class="a-tag '+cls+'">'+t+'</span>';
+  }).join('');
+}
+
+function formatDate(d){
+  return new Date(d).toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'});
+}
+
+function renderArticle(a){
+  document.title=a.title+' \u2014 Gangesh Chawla';
+  var url=encodeURIComponent(window.location.href);
+  var txt=encodeURIComponent(a.title);
+  document.getElementById('linkedinShare').href='https://www.linkedin.com/sharing/share-offsite/?url='+url;
+  document.getElementById('whatsappShare').href='https://wa.me/?text='+txt+'%20'+url;
+  document.getElementById('floatShare').style.display='flex';
+  var html='<a href="/perspectives/" class="back-link">&#8592; All perspectives</a>';
+  html+='<div class="article-header">';
+  html+='<div class="article-tags">'+tagHTML(a.tags)+'</div>';
+  html+='<h1 class="article-title">'+a.title+'</h1>';
+  html+='<div class="article-meta"><span>'+formatDate(a.date)+'</span><span class="meta-sep">|</span><span>'+(a.readTime||5)+' min read</span></div>';
+  html+='</div>';
+  html+='<div class="article-body">'+(a.content||('<p>'+a.excerpt+'</p>'))+'</div>';
+  html+='<hr class="article-divider"/>';
+  html+='<div class="author-card"><div class="author-avatar">G</div><div><div class="author-name">Gangesh Chawla</div><div class="author-bio">Senior Manager at Medanta, alum of Bain and IQVIA. MBA candidate at ISB. Writing about healthcare strategy, emerging markets, and what I learn along the way.</div></div></div>';
+
+  document.getElementById('articleContent').innerHTML=html;
+}
+
+function showError(){
+  document.getElementById('articleContent').innerHTML='<div class="error-state"><div class="error-title">Article not found</div><div class="error-sub"><a href="/perspectives/" style="color:var(--accent)">Back to all perspectives</a></div></div>';
+}
+
+function loadArticle(){
+  var id=getParam('id');
+  if(!id){showError();return;}
+  fetch('/articles.json?v='+Date.now(),{cache:'no-store'})
+    .then(function(r){return r.json();})
+    .then(function(data){
+      var found=null;
+      for(var i=0;i<data.length;i++){
+        if(String(data[i].id)===String(id)){found=data[i];break;}
       }
-    } catch(e) {
-      console.warn('articles.json fetch error:', e.message);
-    }
-    // Fallback to localStorage (local admin preview only)
-    try {
-      const local = JSON.parse(localStorage.getItem('gc_articles') || '[]');
-      console.log('Using localStorage fallback:', local.length, 'articles');
-      return local;
-    } catch { return []; }
-  }
+      if(found){renderArticle(found);}else{showError();}
+    })
+    .catch(function(){showError();});
+}
 
-  function formatDate(d) {
-    return new Date(d).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
-  }
+function copyLink(){
+  navigator.clipboard.writeText(window.location.href)
+    .then(function(){alert('Link copied!');})
+    .catch(function(){alert('Could not copy.');});
+}
 
-  function renderMediaBlock(block) {
-    if (block.type === 'youtube') {
-      const id = block.url.match(/(?:youtu\.be\/|v=)([^&\s]+)/)?.[1];
-      if (!id) return '';
-      return `<div class="media-block">
-        <div class="media-block-label">▶ Video</div>
-        <iframe src="https://www.youtube.com/embed/${id}" height="420" allowfullscreen></iframe>
-      </div>`;
-    }
-    if (block.type === 'slides') {
-      // Convert Google Slides share URL to embed URL
-      const embedUrl = block.url.replace('/pub?', '/embed?').replace('/edit', '/embed');
-      return `<div class="media-block">
-        <div class="media-block-label">📊 Presentation</div>
-        <iframe src="${embedUrl}" height="480" allowfullscreen></iframe>
-      </div>`;
-    }
-    if (block.type === 'pdf') {
-      return `<div class="media-block">
-        <div class="media-block-label">📄 Document</div>
-        <iframe src="${block.url}" height="600"></iframe>
-      </div>`;
-    }
-    if (block.type === 'gallery') {
-      return `<div class="media-block">
-        <div class="media-block-label">🖼 Photos</div>
-        <div class="gallery-grid">${block.images.map(img => `<img src="${img}" onclick="window.open('${img}','_blank')" alt=""/>`).join('')}</div>
-      </div>`;
-    }
-    return '';
-  }
+loadArticle();
+</script>
 
-  function buildBody(article) {
-    // Split text sections by [MEDIA:n] placeholders
-    let html = article.body || '';
-    // Render media blocks inline
-    if (article.mediaBlocks && article.mediaBlocks.length) {
-      article.mediaBlocks.forEach((block, i) => {
-        html = html.replace(`[MEDIA:${i}]`, renderMediaBlock(block));
-      });
-    }
-    // Basic markdown-like rendering
-    html = html
-      .replace(/^## (.+)$/gm, '<h2>$1</h2>')
-      .replace(/^### (.+)$/gm, '<h3>$1</h3>')
-      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*(.+?)\*/g, '<em>$1</em>')
-      .replace(/^> (.+)$/gm, '<blockquote><p>$1</p></blockquote>')
-      .replace(/^---$/gm, '<hr>')
-      .replace(/\n\n/g, '</p><p>');
-    return '<p>' + html + '</p>';
-  }
-
-  // Load article
-  const params = new URLSearchParams(window.location.search);
-  const id = params.get('id');
-  (async () => {
-  const articles = await loadArticles();
-  const article = articles.find(a => a.id === id);
-
-  if (!article) {
-    document.querySelector('.article-header').innerHTML = '<a href="/perspectives/" class="back-link">← All articles</a><h1 class="article-title">Article not found</h1>';
-  } else {
-    document.title = article.title + ' — Gangesh Chawla';
-    const tagArr = Array.isArray(article.tags) ? article.tags : (article.tags ? [article.tags] : (article.category ? [article.category] : []));
-    document.getElementById('articleTagEl').innerHTML = tagArr.map(function(t){ return '<span class="article-tag '+(TAG_CLASS[t]||'t-healthcare')+'">'+t+'</span>'; }).join(' ');
-    document.getElementById('articleTitleEl').textContent = article.title;
-    document.getElementById('articleExcerptEl').textContent = article.excerpt;
-    document.getElementById('articleDateEl').textContent = formatDate(article.date);
-    document.getElementById('articleReadEl').textContent = article.readTime + ' min read';
-    document.getElementById('articleBodyEl').innerHTML = buildBody(article);
-    if (article.coverImage) {
-      document.getElementById('coverImageWrap').innerHTML = `<div class="cover-image-wrap"><img src="${article.coverImage}" alt="cover"/></div>`;
-    }
-  }
-
-  function shareLinkedIn() {
-    window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`, '_blank');
-  }
-  function shareWhatsApp() {
-    window.open(`https://wa.me/?text=${encodeURIComponent(article?.title + ' ' + window.location.href)}`, '_blank');
-  }
-  function copyLink() {
-    navigator.clipboard.writeText(window.location.href);
-    alert('Link copied!');
-  }
-  })();
+<script data-cfasync="false">
+function toggleMenu(){
+  document.getElementById('gc-ham').classList.toggle('open');
+  document.getElementById('gc-mob').classList.toggle('open');
+}
 </script>
 </body>
 </html>
