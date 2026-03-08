@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="Analytics"/>
+  <meta name="theme-color" content="#09090b"/>
+  <title>Analytics — Gangesh Chawla</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,200;0,9..144,300;1,9..144,200;1,9..144,300&family=DM+Mono:wght@300;400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{--bg:#09090b;--surface:#0f0f12;--card:#131316;--border:#1e1e24;--ink:#f0eff0;--muted:#6b6b76;--dim:#2a2a32;--accent:#e8c547;--green:#4ade80;--red:#f87171;--blue:#60a5fa;--purple:#a78bfa;--orange:#fb923c;}
+    html{background:var(--bg);}
+    body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;font-weight:300;min-height:100vh;overflow-x:hidden;}
+    #loginScreen{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:1000;}
+    .login-bg{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:48px 48px;opacity:0.3;}
+    .login-glow{position:absolute;width:600px;height:600px;background:radial-gradient(circle,#e8c54708 0%,transparent 65%);top:50%;left:50%;transform:translate(-50%,-50%);}
+    .login-box{position:relative;z-index:1;text-align:center;padding:64px 48px;border:1px solid var(--border);border-radius:16px;background:var(--surface);max-width:440px;width:90%;}
+    .login-logo{font-family:'Fraunces',serif;font-size:15px;font-weight:200;color:var(--muted);margin-bottom:48px;}
+    .login-title{font-family:'Fraunces',serif;font-size:36px;font-weight:200;line-height:1.15;margin-bottom:12px;}
+    .login-title em{font-style:italic;color:var(--accent);}
+    .login-sub{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:40px;}
+    .google-btn{display:inline-flex;align-items:center;gap:12px;padding:14px 28px;background:var(--card);border:1px solid var(--border);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--ink);cursor:pointer;transition:border-color .2s,background .2s;}
+    .google-btn:hover{border-color:var(--accent);background:#1a1a1e;}
+    #dashboard{display:none;min-height:100vh;}
+    header{padding:0 48px;height:60px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(9,9,11,0.94);backdrop-filter:blur(14px);z-index:10;}
+    .h-logo{font-family:'Fraunces',serif;font-size:15px;font-weight:200;color:var(--muted);}
+    .h-logo span{color:var(--ink);}
+    .h-right{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+    .h-status{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);}
+    .live-dot{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:pulse 2s infinite;}
+    @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+    .range-tabs{display:flex;gap:2px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:3px;}
+    .range-tab{padding:5px 12px;border-radius:6px;font-size:12px;color:var(--muted);cursor:pointer;transition:all .2s;border:none;background:none;font-family:'DM Sans',sans-serif;}
+    .range-tab.active{background:var(--border);color:var(--ink);}
+    .date-range-wrap{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);}
+    .date-input{background:var(--card);border:1px solid var(--border);border-radius:6px;color:var(--ink);font-family:'DM Sans',sans-serif;font-size:12px;padding:5px 8px;outline:none;}
+    .date-input:focus{border-color:var(--accent);}
+    .apply-btn{padding:5px 12px;background:var(--accent);color:#09090b;border:none;border-radius:6px;font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;font-weight:500;}
+    .action-btn{font-size:12px;color:var(--muted);cursor:pointer;padding:6px 12px;border:1px solid var(--border);border-radius:6px;background:none;font-family:'DM Sans',sans-serif;transition:all .2s;}
+    .action-btn:hover{color:var(--ink);border-color:var(--muted);}
+    .tabs{display:flex;gap:0;border-bottom:1px solid var(--border);padding:0 48px;background:var(--surface);overflow-x:auto;}
+    .tab{padding:14px 20px;font-size:13px;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;}
+    .tab.active{color:var(--ink);border-bottom-color:var(--accent);}
+    .tab-content{display:none;}
+    .tab-content.active{display:block;}
+    main{padding:32px 48px;max-width:1400px;margin:0 auto;}
+    .scorecards{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:24px;}
+    .sc{background:var(--card);padding:22px 24px;position:relative;}
+    .sc::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+    .sc.c-green::after{background:var(--green);}
+    .sc.c-yellow::after{background:var(--accent);}
+    .sc.c-blue::after{background:var(--blue);}
+    .sc.c-purple::after{background:var(--purple);}
+    .sc.c-orange::after{background:var(--orange);}
+    .sc.c-red::after{background:var(--red);}
+    .sc-label{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+    .sc-value{font-family:'Fraunces',serif;font-size:32px;font-weight:200;line-height:1;margin-bottom:5px;}
+    .v-green{color:var(--green);} .v-yellow{color:var(--accent);} .v-blue{color:var(--blue);} .v-purple{color:var(--purple);} .v-orange{color:var(--orange);} .v-red{color:var(--red);}
+    .sc-delta{font-size:11px;color:var(--muted);}
+    .sc-delta.up{color:var(--green);} .sc-delta.down{color:var(--red);}
+    .grid-2{display:grid;grid-template-columns:2fr 1fr;gap:24px;margin-bottom:24px;}
+    .grid-eq{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px;}
+    .panel{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:26px 30px;}
+    .panel-full{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:26px 30px;margin-bottom:24px;}
+    .panel-title{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:22px;display:flex;justify-content:space-between;align-items:center;}
+    .chart-wrap{position:relative;height:200px;width:100%;}
+    .heatmap-wrap{overflow-x:auto;}
+    .heatmap{display:grid;grid-template-columns:36px repeat(24,1fr);gap:2px;min-width:580px;}
+    .hm-label{font-size:10px;color:var(--muted);display:flex;align-items:center;font-family:'DM Mono',monospace;}
+    .hm-hour{font-size:9px;color:var(--muted);text-align:center;font-family:'DM Mono',monospace;padding-bottom:3px;}
+    .hm-cell{height:26px;border-radius:3px;background:var(--dim);}
+    .journey-wrap{display:flex;gap:0;overflow-x:auto;padding-bottom:8px;}
+    .journey-step{flex-shrink:0;width:170px;}
+    .journey-arrow{flex-shrink:0;display:flex;align-items:center;padding:0 8px;color:var(--dim);font-size:18px;margin-top:22px;}
+    .journey-step-title{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;text-align:center;}
+    .journey-page{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:9px 12px;margin-bottom:5px;font-size:12px;display:flex;justify-content:space-between;align-items:center;}
+    .journey-page-name{color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:110px;}
+    .journey-page-pct{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);}
+    .data-table{width:100%;border-collapse:collapse;}
+    .data-table tr{border-bottom:1px solid var(--border);}
+    .data-table tr:last-child{border-bottom:none;}
+    .data-table td{padding:9px 0;font-size:13px;vertical-align:middle;}
+    .data-table td:last-child{text-align:right;font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);}
+    .rank{font-size:11px;color:var(--dim);font-family:'DM Mono',monospace;margin-right:8px;}
+    .bar-bg{background:var(--border);border-radius:2px;height:3px;margin-top:3px;}
+    .bar-fill{height:3px;border-radius:2px;background:var(--accent);}
+    .bar-blue{background:var(--blue);} .bar-green{background:var(--green);}
+    .donut-wrap{display:flex;align-items:center;gap:28px;}
+    .donut-legend{display:flex;flex-direction:column;gap:11px;flex:1;}
+    .legend-item{display:flex;align-items:center;gap:9px;font-size:13px;}
+    .legend-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+    .legend-pct{font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);margin-left:auto;}
+    .realtime-num{font-family:'Fraunces',serif;font-size:60px;font-weight:200;color:var(--green);line-height:1;margin-bottom:4px;}
+    .realtime-label{font-size:12px;color:var(--muted);}
+    .realtime-pages{margin-top:20px;display:flex;flex-direction:column;gap:3px;}
+    .rt-page{display:flex;justify-content:space-between;font-size:12px;padding:7px 0;border-bottom:1px solid var(--border);}
+    .rt-page:last-child{border-bottom:none;}
+    .rt-page-name{color:var(--muted);font-family:'DM Mono',monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:130px;}
+    .rt-page-count{color:var(--green);font-family:'DM Mono',monospace;}
+    .loading{display:flex;align-items:center;justify-content:center;height:80px;color:var(--muted);font-size:13px;gap:10px;}
+    .spinner{width:14px;height:14px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;}
+    @keyframes spin{to{transform:rotate(360deg);}}
+    .error-msg{font-size:12px;color:var(--red);text-align:center;padding:20px;}
+    #installBanner{display:none;position:fixed;bottom:24px;right:24px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 20px;z-index:100;max-width:280px;}
+    .install-title{font-size:13px;font-weight:500;margin-bottom:4px;}
+    .install-sub{font-size:12px;color:var(--muted);margin-bottom:12px;}
+    .install-actions{display:flex;gap:8px;}
+    .install-yes{padding:7px 14px;background:var(--accent);color:#09090b;border:none;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;}
+    .install-no{padding:7px 14px;background:none;border:1px solid var(--border);color:var(--muted);border-radius:6px;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;}
+    @media(max-width:1200px){.scorecards{grid-template-columns:repeat(3,1fr);}.grid-2{grid-template-columns:1fr;}}
+    @media(max-width:768px){main{padding:16px;}.tabs{padding:0 16px;}header{padding:0 16px;}.grid-eq{grid-template-columns:1fr;}.scorecards{grid-template-columns:repeat(2,1fr);}.date-range-wrap{display:none;}}
+  </style>
+</head>
+<body>
+
+<div id="loginScreen">
+  <div class="login-bg"></div>
+  <div class="login-glow"></div>
+  <div class="login-box">
+    <div class="login-logo">Gangesh Chawla</div>
+    <h1 class="login-title">Your <em>analytics,</em><br/>at a glance.</h1>
+    <p class="login-sub">Sign in with the Google account connected to your Analytics property.</p>
+    <button class="google-btn" onclick="signIn()">
+      <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+      Sign in with Google
+    </button>
+  </div>
+</div>
+
+<div id="dashboard">
+  <header>
+    <div class="h-logo">Gangesh Chawla &middot; <span>Analytics</span></div>
+    <div class="h-right">
+      <div class="h-status"><span class="live-dot"></span> Live</div>
+      <div class="range-tabs">
+        <button class="range-tab active" onclick="setRange(7,this)">7d</button>
+        <button class="range-tab" onclick="setRange(28,this)">28d</button>
+        <button class="range-tab" onclick="setRange(90,this)">90d</button>
+      </div>
+      <div class="date-range-wrap">
+        <input type="date" id="dateFrom" class="date-input"/>
+        <span>to</span>
+        <input type="date" id="dateTo" class="date-input"/>
+        <button class="apply-btn" onclick="applyCustom()">Apply</button>
+      </div>
+      <button class="action-btn" onclick="exportCSV()">Export CSV</button>
+      <button class="action-btn" onclick="signOut()">Sign out</button>
+    </div>
+  </header>
+
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('overview',this)">Overview</div>
+    <div class="tab" onclick="switchTab('content',this)">Content</div>
+    <div class="tab" onclick="switchTab('audience',this)">Audience</div>
+    <div class="tab" onclick="switchTab('subscribers',this)">Subscribers</div>
+  </div>
+
+  <div id="tab-overview" class="tab-content active">
+    <main>
+      <div class="scorecards">
+        <div class="sc c-green"><div class="sc-label">Total Users</div><div class="sc-value v-green" id="scUsers">-</div><div class="sc-delta" id="d0"></div></div>
+        <div class="sc c-yellow"><div class="sc-label">Sessions</div><div class="sc-value v-yellow" id="scSessions">-</div><div class="sc-delta" id="d1"></div></div>
+        <div class="sc c-blue"><div class="sc-label">Page Views</div><div class="sc-value v-blue" id="scViews">-</div><div class="sc-delta" id="d2"></div></div>
+        <div class="sc c-purple"><div class="sc-label">Avg Session</div><div class="sc-value v-purple" id="scDur">-</div><div class="sc-delta" id="d3"></div></div>
+        <div class="sc c-orange"><div class="sc-label">Bounce Rate</div><div class="sc-value v-orange" id="scBounce">-</div><div class="sc-delta" id="d4"></div></div>
+        <div class="sc c-red"><div class="sc-label">New Users</div><div class="sc-value v-red" id="scNew">-</div><div class="sc-delta" id="d5"></div></div>
+      </div>
+      <div class="grid-2">
+        <div class="panel">
+          <div class="panel-title">Visitors over time <span id="chartLabel" style="text-transform:none;letter-spacing:0;font-size:11px;"></span></div>
+          <div class="chart-wrap"><canvas id="lineChart"></canvas></div>
+        </div>
+        <div class="panel">
+          <div class="panel-title">Right now</div>
+          <div class="realtime-num" id="rtCount">-</div>
+          <div class="realtime-label">active users on site</div>
+          <div class="realtime-pages" id="rtPages"></div>
+        </div>
+      </div>
+      <div class="grid-eq">
+        <div class="panel"><div class="panel-title">Traffic sources</div><div id="topSources"><div class="loading"><div class="spinner"></div> Loading</div></div></div>
+        <div class="panel"><div class="panel-title">Top referrers</div><div id="topRefs"><div class="loading"><div class="spinner"></div> Loading</div></div></div>
+      </div>
+    </main>
+  </div>
+
+  <div id="tab-content" class="tab-content">
+    <main>
+      <div class="grid-eq">
+        <div class="panel"><div class="panel-title">Most read pages</div><div id="topPages"><div class="loading"><div class="spinner"></div> Loading</div></div></div>
+        <div class="panel"><div class="panel-title">Avg time per page</div><div id="timePage"><div class="loading"><div class="spinner"></div> Loading</div></div></div>
+      </div>
+      <div class="panel-full">
+        <div class="panel-title">Hour by hour traffic heatmap <span style="text-transform:none;letter-spacing:0;font-size:11px;">(darker = more visitors)</span></div>
+        <div class="heatmap-wrap"><div class="heatmap" id="heatmap"><div class="loading"><div class="spinner"></div> Loading</div></div></div>
+      </div>
+      <div class="panel-full">
+        <div class="panel-title">User journey — top page flows</div>
+        <div class="journey-wrap" id="journeyWrap"><div class="loading"><div class="spinner"></div> Loading</div></div>
+      </div>
+    </main>
+  </div>
+
+  <div id="tab-audience" class="tab-content">
+    <main>
+      <div class="grid-eq">
+        <div class="panel"><div class="panel-title">Devices</div><div class="donut-wrap"><canvas id="dc1" width="110" height="110" style="flex-shrink:0;"></canvas><div class="donut-legend" id="dl1"><div class="loading"><div class="spinner"></div></div></div></div></div>
+        <div class="panel"><div class="panel-title">New vs Returning</div><div class="donut-wrap"><canvas id="dc2" width="110" height="110" style="flex-shrink:0;"></canvas><div class="donut-legend" id="dl2"><div class="loading"><div class="spinner"></div></div></div></div></div>
+      </div>
+      <div class="grid-eq">
+        <div class="panel"><div class="panel-title">Top countries</div><div id="countries"><div class="loading"><div class="spinner"></div> Loading</div></div></div>
+        <div class="panel"><div class="panel-title">Browsers</div><div id="browsers"><div class="loading"><div class="spinner"></div> Loading</div></div></div>
+      </div>
+    </main>
+  </div>
+
+  <div id="tab-subscribers" class="tab-content">
+    <main>
+      <div class="grid-eq">
+        <div class="panel">
+          <div class="panel-title">Subscriber list</div>
+          <p style="font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:20px;">Your subscribers are stored in your Google Sheet. Click below to view the live count and list.</p>
+          <a href="https://docs.google.com/spreadsheets" target="_blank" style="display:inline-block;padding:11px 22px;background:var(--accent);color:#09090b;border-radius:8px;font-size:13px;font-weight:500;text-decoration:none;">Open Google Sheet</a>
+        </div>
+        <div class="panel">
+          <div class="panel-title">Subscribe page visits</div>
+          <div id="subVisits"><div class="loading"><div class="spinner"></div> Loading</div></div>
+        </div>
+      </div>
+      <div class="panel-full">
+        <div class="panel-title">Send weekly email report</div>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.7;">Get a summary of this week's analytics sent to your inbox.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+          <input type="email" id="repEmail" placeholder="Gangesh_chawla_pgp2027@isb.edu" style="flex:1;min-width:240px;padding:11px 14px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--ink);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;"/>
+          <button onclick="sendReport()" style="padding:11px 22px;background:var(--accent);color:#09090b;border:none;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;">Send Report</button>
+        </div>
+        <p id="repStatus" style="font-size:12px;color:var(--green);margin-top:12px;display:none;">Report sent to your email!</p>
+      </div>
+    </main>
+  </div>
+</div>
+
+<div id="installBanner">
+  <div class="install-title">Add to Home Screen</div>
+  <div class="install-sub">Install as an app for quick access.</div>
+  <div class="install-actions">
+    <button class="install-yes" onclick="doInstall()">Install</button>
+    <button class="install-no" onclick="document.getElementById('installBanner').style.display='none'">Later</button>
+  </div>
+</div>
+
+<script>
+const CLIENT_ID   = '12846157879-tbeo4ibq8o39h4lv2j10avdcqd4k2v4a.apps.googleusercontent.com';
+const PROPERTY_ID = '527599578';
+const SCOPES      = 'https://www.googleapis.com/auth/analytics.readonly';
+const APPS_SCRIPT = 'https://script.google.com/macros/s/AKfycbxTe5cpbv3UbevtaCFX1eChNKowsgwbHNUWU22U6TcQQv6cP2fFSJYq9Vq2a2_1BLdr/exec';
+
+let token, days = 7, cs = null, ce = null, deferred = null, tsData = null;
+let contentLoaded = false, audienceLoaded = false;
+
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferred = e; document.getElementById('installBanner').style.display='block'; });
+function doInstall() { if(deferred){deferred.prompt();deferred=null;} document.getElementById('installBanner').style.display='none'; }
+
+function signIn() {
+  google.accounts.id.initialize({client_id:CLIENT_ID,callback:()=>{}});
+  const tc = google.accounts.oauth2.initTokenClient({client_id:CLIENT_ID,scope:SCOPES,callback:(r)=>{
+    if(r.error){alert('Auth error: '+r.error);return;}
+    token=r.access_token;
+    document.getElementById('loginScreen').style.display='none';
+    document.getElementById('dashboard').style.display='block';
+    initDates(); loadOverview(); setInterval(loadRT,30000);
+  }});
+  tc.requestAccessToken();
+}
+function signOut() { google.accounts.oauth2.revoke(token,()=>{ token=null; document.getElementById('dashboard').style.display='none'; document.getElementById('loginScreen').style.display='flex'; }); }
+
+function switchTab(name,el) {
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active'); document.getElementById('tab-'+name).classList.add('active');
+  if(name==='content' && !contentLoaded){loadContent();contentLoaded=true;}
+  if(name==='audience' && !audienceLoaded){loadAudience();audienceLoaded=true;}
+  if(name==='subscribers'){loadSubVisits();}
+}
+
+function initDates() {
+  const to=new Date(),from=new Date(); from.setDate(from.getDate()-7);
+  document.getElementById('dateTo').value=to.toISOString().split('T')[0];
+  document.getElementById('dateFrom').value=from.toISOString().split('T')[0];
+}
+function setRange(d,btn) { document.querySelectorAll('.range-tab').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); days=d;cs=null;ce=null; contentLoaded=false;audienceLoaded=false; loadOverview(); }
+function applyCustom() {
+  cs=document.getElementById('dateFrom').value; ce=document.getElementById('dateTo').value;
+  if(!cs||!ce)return;
+  document.querySelectorAll('.range-tab').forEach(b=>b.classList.remove('active'));
+  contentLoaded=false;audienceLoaded=false; loadOverview();
+}
+function dr() { if(cs&&ce)return{startDate:cs,endDate:ce}; const e=new Date(),s=new Date(); s.setDate(s.getDate()-days); return{startDate:s.toISOString().split('T')[0],endDate:e.toISOString().split('T')[0]}; }
+function drPrev() {
+  const d=dr(); const ms=new Date(d.startDate),me=new Date(d.endDate);
+  const diff=Math.round((me-ms)/86400000);
+  const pe=new Date(ms); pe.setDate(pe.getDate()-1);
+  const ps=new Date(pe); ps.setDate(ps.getDate()-diff);
+  return{startDate:ps.toISOString().split('T')[0],endDate:pe.toISOString().split('T')[0]};
+}
+
+async function ga(body) {
+  const r=await fetch('https://analyticsdata.googleapis.com/v1beta/properties/'+PROPERTY_ID+':runReport',{method:'POST',headers:{'Authorization':'Bearer '+token,'Content-Type':'application/json'},body:JSON.stringify(body)});
+  return r.json();
+}
+async function gaRT(body) {
+  const r=await fetch('https://analyticsdata.googleapis.com/v1beta/properties/'+PROPERTY_ID+':runRealtimeReport',{method:'POST',headers:{'Authorization':'Bearer '+token,'Content-Type':'application/json'},body:JSON.stringify(body)});
+  return r.json();
+}
+
+function N(v){v=parseInt(v)||0;if(v>=1000000)return(v/1000000).toFixed(1)+'M';if(v>=1000)return(v/1000).toFixed(1)+'K';return v.toLocaleString();}
+function D(s){s=parseInt(s)||0;return Math.floor(s/60)+'m '+(s%60)+'s';}
+function P(v){return(parseFloat(v)||0).toFixed(1)+'%';}
+function clean(s){return s.replace(' — Gangesh Chawla','').replace(' - Gangesh Chawla','');}
+
+function tbl(id,rows,lFn,vFn,fFn,barClass) {
+  const max=rows.length?vFn(rows[0]):1;
+  document.getElementById(id).innerHTML=rows.length
+    ?'<table class="data-table">'+rows.map((r,i)=>{const l=lFn(r),v=vFn(r),p=Math.round(v/max*100);return'<tr><td><span class="rank">'+(i+1)+'</span>'+l+'<div class="bar-bg"><div class="bar-fill '+(barClass||'')+'" style="width:'+p+'%"></div></div></td><td>'+fFn(v)+'</td></tr>';}).join('')+'</table>'
+    :'<div class="error-msg">No data for this period</div>';
+}
+
+function donut(cid,lid,labels,vals,colors) {
+  const c=document.getElementById(cid),ctx=c.getContext('2d');
+  const total=vals.reduce((s,v)=>s+v,0)||1;
+  let a=-Math.PI/2; ctx.clearRect(0,0,110,110);
+  vals.forEach((v,i)=>{const sl=(v/total)*Math.PI*2;ctx.beginPath();ctx.moveTo(55,55);ctx.arc(55,55,44,a,a+sl);ctx.closePath();ctx.fillStyle=colors[i%colors.length];ctx.fill();a+=sl;});
+  ctx.beginPath();ctx.arc(55,55,27,0,Math.PI*2);ctx.fillStyle='#131316';ctx.fill();
+  document.getElementById(lid).innerHTML=labels.map((l,i)=>'<div class="legend-item"><div class="legend-dot" style="background:'+colors[i%colors.length]+'"></div><span>'+l+'</span><span class="legend-pct">'+Math.round(vals[i]/total*100)+'%</span></div>').join('');
+}
+
+async function loadOverview() { loadScores(); loadTS(); loadRT(); loadSources(); loadRefs(); }
+
+async function loadScores() {
+  const metrics=[{name:'totalUsers'},{name:'sessions'},{name:'screenPageViews'},{name:'averageSessionDuration'},{name:'bounceRate'},{name:'newUsers'}];
+  const [c,p]=await Promise.all([ga({dateRanges:[dr()],metrics}),ga({dateRanges:[drPrev()],metrics})]);
+  const v=c.rows?c.rows[0].metricValues:metrics.map(()=>({value:'0'}));
+  const pv=p.rows?p.rows[0].metricValues:metrics.map(()=>({value:'0'}));
+  const ids=['scUsers','scSessions','scViews','scDur','scBounce','scNew'];
+  const fmts=[N,N,N,D,P,N];
+  ids.forEach((id,i)=>{
+    document.getElementById(id).textContent=fmts[i](v[i].value);
+    const cv=parseFloat(v[i].value)||0,prev=parseFloat(pv[i].value)||0;
+    const pct=prev>0?((cv-prev)/prev*100).toFixed(1):null;
+    const el=document.getElementById('d'+i);
+    if(pct!==null){el.textContent=(pct>0?'↑':'↓')+' '+Math.abs(pct)+'% vs prev';el.className='sc-delta '+(pct>=0?'up':'down');}
+    else{el.textContent='No prior data';}
+  });
+}
+
+async function loadTS() {
+  const d=dr();
+  const data=await ga({dateRanges:[d],dimensions:[{name:'date'}],metrics:[{name:'totalUsers'}],orderBys:[{dimension:{dimensionName:'date'}}]});
+  const labels=[],vals=[];
+  (data.rows||[]).forEach(r=>{const dt=r.dimensionValues[0].value;labels.push(dt.slice(4,6)+'/'+dt.slice(6,8));vals.push(parseInt(r.metricValues[0].value));});
+  document.getElementById('chartLabel').textContent=d.startDate+' to '+d.endDate;
+  tsData={labels,vals}; drawLine(labels,vals);
+}
+
+function drawLine(labels,vals) {
+  const cv=document.getElementById('lineChart');
+  const wp=cv.parentElement; cv.width=wp.offsetWidth; cv.height=wp.offsetHeight;
+  const ctx=cv.getContext('2d'); ctx.clearRect(0,0,cv.width,cv.height);
+  if(!vals.length)return;
+  const pd={t:16,r:16,b:32,l:44},W=cv.width-pd.l-pd.r,H=cv.height-pd.t-pd.b,mx=Math.max(...vals)||1;
+  ctx.font='11px DM Mono,monospace'; ctx.fillStyle='#6b6b76';
+  [0,.25,.5,.75,1].forEach(f=>{const y=pd.t+H*(1-f);ctx.beginPath();ctx.strokeStyle='#1e1e24';ctx.lineWidth=1;ctx.moveTo(pd.l,y);ctx.lineTo(pd.l+W,y);ctx.stroke();ctx.fillText(Math.round(mx*f),4,y+4);});
+  const st=Math.max(1,Math.floor(labels.length/7));
+  labels.forEach((l,i)=>{if(i%st!==0)return;const x=pd.l+(i/(labels.length-1))*W;ctx.fillText(l,x-12,cv.height-8);});
+  const gr=ctx.createLinearGradient(0,pd.t,0,pd.t+H);
+  gr.addColorStop(0,'rgba(232,197,71,0.18)');gr.addColorStop(1,'rgba(232,197,71,0)');
+  ctx.beginPath();
+  vals.forEach((v,i)=>{const x=pd.l+(i/(vals.length-1))*W,y=pd.t+H*(1-v/mx);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);});
+  ctx.lineTo(pd.l+W,pd.t+H);ctx.lineTo(pd.l,pd.t+H);ctx.closePath();ctx.fillStyle=gr;ctx.fill();
+  ctx.beginPath();
+  vals.forEach((v,i)=>{const x=pd.l+(i/(vals.length-1))*W,y=pd.t+H*(1-v/mx);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);});
+  ctx.strokeStyle='#e8c547';ctx.lineWidth=2;ctx.stroke();
+  vals.forEach((v,i)=>{const x=pd.l+(i/(vals.length-1))*W,y=pd.t+H*(1-v/mx);ctx.beginPath();ctx.arc(x,y,3,0,Math.PI*2);ctx.fillStyle='#e8c547';ctx.fill();});
+}
+
+async function loadRT() {
+  const data=await gaRT({metrics:[{name:'activeUsers'}],dimensions:[{name:'unifiedScreenName'}]});
+  const total=(data.rows||[]).reduce((s,r)=>s+parseInt(r.metricValues[0].value),0);
+  document.getElementById('rtCount').textContent=total;
+  const pages=(data.rows||[]).slice(0,5);
+  document.getElementById('rtPages').innerHTML=pages.length
+    ?pages.map(r=>'<div class="rt-page"><span class="rt-page-name">'+(r.dimensionValues[0].value||'/')+'</span><span class="rt-page-count">'+r.metricValues[0].value+'</span></div>').join('')
+    :'<div style="font-size:12px;color:var(--muted);margin-top:8px;">No active visitors</div>';
+}
+
+async function loadSources() {
+  const data=await ga({dateRanges:[dr()],dimensions:[{name:'sessionDefaultChannelGrouping'}],metrics:[{name:'sessions'}],orderBys:[{metric:{metricName:'sessions'},desc:true}],limit:7});
+  tbl('topSources',data.rows||[],r=>r.dimensionValues[0].value||'(direct)',r=>parseInt(r.metricValues[0].value),N,'');
+}
+
+async function loadRefs() {
+  const data=await ga({dateRanges:[dr()],dimensions:[{name:'sessionSource'}],metrics:[{name:'sessions'}],orderBys:[{metric:{metricName:'sessions'},desc:true}],limit:10});
+  const rows=(data.rows||[]).filter(r=>!['(direct)','(not set)','google','bing','yahoo'].includes(r.dimensionValues[0].value)).slice(0,7);
+  tbl('topRefs',rows,r=>r.dimensionValues[0].value,r=>parseInt(r.metricValues[0].value),N,'bar-blue');
+}
+
+async function loadContent() {
+  const [p,t,h]=await Promise.all([
+    ga({dateRanges:[dr()],dimensions:[{name:'pageTitle'}],metrics:[{name:'screenPageViews'}],orderBys:[{metric:{metricName:'screenPageViews'},desc:true}],limit:8}),
+    ga({dateRanges:[dr()],dimensions:[{name:'pageTitle'}],metrics:[{name:'averageSessionDuration'}],orderBys:[{metric:{metricName:'averageSessionDuration'},desc:true}],limit:8}),
+    ga({dateRanges:[dr()],dimensions:[{name:'dayOfWeek'},{name:'hour'}],metrics:[{name:'sessions'}]})
+  ]);
+  tbl('topPages',p.rows||[],r=>clean(r.dimensionValues[0].value),r=>parseInt(r.metricValues[0].value),N,'');
+  tbl('timePage',t.rows||[],r=>clean(r.dimensionValues[0].value),r=>parseFloat(r.metricValues[0].value),D,'bar-green');
+  buildHeatmap(h.rows||[]);
+  buildJourney();
+}
+
+function buildHeatmap(rows) {
+  const days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const grid={};
+  days.forEach(d=>{grid[d]={};for(let h=0;h<24;h++)grid[d][h]=0;});
+  let mx=0;
+  rows.forEach(r=>{const d=days[parseInt(r.dimensionValues[0].value)],h=parseInt(r.dimensionValues[1].value),v=parseInt(r.metricValues[0].value);grid[d][h]=v;if(v>mx)mx=v;});
+  let html='<div class="hm-label"></div>';
+  for(let h=0;h<24;h++)html+='<div class="hm-hour">'+(h<10?'0':'')+h+'</div>';
+  days.forEach(d=>{
+    html+='<div class="hm-label">'+d+'</div>';
+    for(let h=0;h<24;h++){const v=grid[d][h],a=mx>0?0.05+(v/mx)*0.88:0.05;html+='<div class="hm-cell" title="'+d+' '+h+':00 — '+v+' sessions" style="background:rgba(232,197,71,'+a.toFixed(2)+')"></div>';}
+  });
+  document.getElementById('heatmap').innerHTML=html;
+}
+
+function buildJourney() {
+  ga({dateRanges:[dr()],dimensions:[{name:'pageTitle'}],metrics:[{name:'entrances'},{name:'screenPageViews'},{name:'exits'}],orderBys:[{metric:{metricName:'entrances'},desc:true}],limit:5}).then(function(d){
+    const r=d.rows||[];
+    if(!r.length){document.getElementById('journeyWrap').innerHTML='<div class="error-msg">Not enough data yet</div>';return;}
+    const steps=['Entry pages','Most viewed','Exit pages'];
+    let html='';
+    steps.forEach(function(step,si){
+      if(si>0)html+='<div class="journey-arrow">&#8594;</div>';
+      const sorted=[...r].sort(function(a,b){return parseInt(b.metricValues[si].value)-parseInt(a.metricValues[si].value);}).slice(0,4);
+      const tot=sorted.reduce(function(s,x){return s+parseInt(x.metricValues[si].value);},0)||1;
+      html+='<div class="journey-step"><div class="journey-step-title">'+step+'</div>';
+      sorted.forEach(function(x){const nm=clean(x.dimensionValues[0].value),v=parseInt(x.metricValues[si].value),p=Math.round(v/tot*100);html+='<div class="journey-page"><span class="journey-page-name">'+nm+'</span><span class="journey-page-pct">'+p+'%</span></div>';});
+      html+='</div>';
+    });
+    document.getElementById('journeyWrap').innerHTML=html;
+  });
+}
+
+async function loadAudience() {
+  const [dev,nvr,ctr,brw]=await Promise.all([
+    ga({dateRanges:[dr()],dimensions:[{name:'deviceCategory'}],metrics:[{name:'sessions'}],orderBys:[{metric:{metricName:'sessions'},desc:true}]}),
+    ga({dateRanges:[dr()],dimensions:[{name:'newVsReturning'}],metrics:[{name:'sessions'}],orderBys:[{metric:{metricName:'sessions'},desc:true}]}),
+    ga({dateRanges:[dr()],dimensions:[{name:'country'}],metrics:[{name:'totalUsers'}],orderBys:[{metric:{metricName:'totalUsers'},desc:true}],limit:7}),
+    ga({dateRanges:[dr()],dimensions:[{name:'browser'}],metrics:[{name:'sessions'}],orderBys:[{metric:{metricName:'sessions'},desc:true}],limit:6})
+  ]);
+  const dr1=dev.rows||[]; donut('dc1','dl1',dr1.map(r=>r.dimensionValues[0].value),dr1.map(r=>parseInt(r.metricValues[0].value)),['#e8c547','#4ade80','#60a5fa']);
+  const dr2=nvr.rows||[]; donut('dc2','dl2',dr2.map(r=>r.dimensionValues[0].value),dr2.map(r=>parseInt(r.metricValues[0].value)),['#a78bfa','#fb923c']);
+  tbl('countries',ctr.rows||[],r=>r.dimensionValues[0].value,r=>parseInt(r.metricValues[0].value),N,'');
+  tbl('browsers',brw.rows||[],r=>r.dimensionValues[0].value,r=>parseInt(r.metricValues[0].value),N,'bar-blue');
+}
+
+async function loadSubVisits() {
+  const data=await ga({dateRanges:[dr()],dimensions:[{name:'pageTitle'}],metrics:[{name:'screenPageViews'}],orderBys:[{metric:{metricName:'screenPageViews'},desc:true}],limit:10});
+  const rows=(data.rows||[]).filter(r=>r.dimensionValues[0].value.toLowerCase().includes('perspect'));
+  tbl('subVisits',rows,r=>clean(r.dimensionValues[0].value),r=>parseInt(r.metricValues[0].value),N,'');
+}
+
+async function sendReport() {
+  const email=document.getElementById('repEmail').value.trim();
+  if(!email){alert('Enter your email');return;}
+  const d=dr();
+  const data=await ga({dateRanges:[d],metrics:[{name:'totalUsers'},{name:'sessions'},{name:'screenPageViews'},{name:'averageSessionDuration'},{name:'bounceRate'}]});
+  const v=data.rows?data.rows[0].metricValues:[{value:'0'},{value:'0'},{value:'0'},{value:'0'},{value:'0'}];
+  const params={action:'weeklyReport',email,period:d.startDate+' to '+d.endDate,users:N(v[0].value),sessions:N(v[1].value),pageviews:N(v[2].value),duration:D(v[3].value),bounce:P(v[4].value)};
+  const url=APPS_SCRIPT+'?'+Object.keys(params).map(k=>k+'='+encodeURIComponent(params[k])).join('&');
+  await fetch(url,{mode:'no-cors'});
+  document.getElementById('repStatus').style.display='block';
+  setTimeout(()=>document.getElementById('repStatus').style.display='none',4000);
+}
+
+function exportCSV() {
+  ga({dateRanges:[dr()],dimensions:[{name:'date'}],metrics:[{name:'totalUsers'},{name:'sessions'},{name:'screenPageViews'}],orderBys:[{dimension:{dimensionName:'date'}}]}).then(data=>{
+    let csv='Date,Users,Sessions,PageViews\n';
+    (data.rows||[]).forEach(r=>{const d=r.dimensionValues[0].value;csv+=d.slice(0,4)+'-'+d.slice(4,6)+'-'+d.slice(6,8)+','+r.metricValues.map(m=>m.value).join(',')+'\n';});
+    const a=document.createElement('a'); const d=dr();
+    a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
+    a.download='analytics-'+d.startDate+'-to-'+d.endDate+'.csv';
+    a.click();
+  });
+}
+
+window.addEventListener('resize',()=>{ if(token&&tsData)drawLine(tsData.labels,tsData.vals); });
+</script>
+</body>
+</html>
