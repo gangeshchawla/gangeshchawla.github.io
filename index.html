@@ -279,5 +279,14 @@
     }
   }
 
-    function toggleMenu() {
-    docu
+  loadArticles().then(renderFeatured);
+</script>
+
+<script data-cfasync="false">
+function toggleMenu(){
+  document.getElementById('gc-ham').classList.toggle('open');
+  document.getElementById('gc-mob').classList.toggle('open');
+}
+</script>
+</body>
+</html>
