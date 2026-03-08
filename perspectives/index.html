@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Perspectives — Gangesh Chawla</title>
+  <title>Perspectives Gangesh Chawla</title>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-YVV9ML4HJK"></script>
   <script>
@@ -15,9 +15,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300;1,9..144,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-    :root{--bg:#09090b;--surface:#111113;--border:#1f1f24;--ink:#f0eff0;--muted:#71717a;--accent:#e8c547;--accent2:#4ade80;--warm:#fb923c;}
+    :root{--bg:#09090b;--surface:#111113;--border:#1f1f24;--ink:#f2f2f2;--muted:#b4b4bc;--accent:#e8c547;--accent2:#4ade80;--warm:#fb923c;}
     html{scroll-behavior:smooth;}
-    body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;font-weight:300;overflow-x:hidden;}
+    body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;font-weight:400;overflow-x:hidden;}
     a{color:inherit;text-decoration:none;}
 
     nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 64px;height:64px;display:flex;align-items:center;justify-content:space-between;background:rgba(9,9,11,0.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);}
@@ -151,7 +151,7 @@
   <div class="page-header-inner">
     <div>
       <h1 class="page-title">My<br/><em>Perspectives.</em></h1>
-      <p class="page-sub">Essays on healthcare strategy, building communities, and lessons from the ground level. No fluff.</p>
+      <p class="page-sub">Perspectives on healthcare strategy, building communities, and lessons from the ground level. No fluff.</p>
     </div>
     <div class="filter-bar">
       <button class="filter-btn active" onclick="filterArticles('all',this)">All</button>
@@ -175,13 +175,13 @@
 <div id="emptySection" class="empty-section" style="display:none;">
   <div class="empty-icon">✍️</div>
   <div class="empty-title">No articles yet</div>
-  <div class="empty-sub">Check back soon — essays are on the way.</div>
+  <div class="empty-sub">Check back soon perspectives are on the way.</div>
 </div>
 
 <div class="subscribe-wrap">
   <div class="subscribe-box">
     <div class="subscribe-title">Get new articles <em>in your inbox.</em></div>
-    <p class="subscribe-sub">No spam. Just thoughtful essays when I publish something new.</p>
+    <p class="subscribe-sub">No spam. Just thoughtful perspectives when I publish something new.</p>
     <div class="subscribe-form">
       <input type="text" id="subName" placeholder="Your name"/>
       <input type="email" id="subEmail" placeholder="Your email"/>
@@ -301,12 +301,15 @@
     }
   }
 
-  function toggleMenu() {
-    document.getElementById('gc-ham').classList.toggle('open');
-    document.getElementById('gc-mob').classList.toggle('open');
-  }
 
   loadArticles().then(function(articles){ render(articles); });
+</script>
+
+<script data-cfasync="false">
+function toggleMenu(){
+  document.getElementById('gc-ham').classList.toggle('open');
+  document.getElementById('gc-mob').classList.toggle('open');
+}
 </script>
 </body>
 </html>
