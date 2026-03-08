@@ -15,9 +15,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300;1,9..144,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-    :root{--bg:#09090b;--surface:#111113;--border:#1f1f24;--ink:#f0eff0;--muted:#71717a;--accent:#e8c547;--accent2:#4ade80;--warm:#fb923c;}
+    :root{--bg:#09090b;--surface:#111113;--border:#1f1f24;--ink:#f2f2f2;--muted:#b4b4bc;--accent:#e8c547;--accent2:#4ade80;--warm:#fb923c;}
     html{scroll-behavior:smooth;}
-    body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;font-weight:300;overflow-x:hidden;}
+    body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;font-weight:400;overflow-x:hidden;}
     a{color:inherit;text-decoration:none;}
 
     nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 64px;height:64px;display:flex;align-items:center;justify-content:space-between;background:rgba(9,9,11,0.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);}
@@ -25,7 +25,7 @@
     .nav-right{display:flex;align-items:center;gap:32px;}
     .nav-links{display:flex;gap:32px;}
     .nav-links a{font-size:13px;color:var(--muted);transition:color .2s;}
-    .nav-links a:hover{color:var(--ink);}
+    .nav-links a:hover,.nav-links a.active{color:var(--ink);}
     .nav-cta{padding:8px 20px;background:var(--accent);color:#09090b;font-size:13px;font-weight:500;border-radius:6px;}
     .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;background:none;border:none;}
     .hamburger span{display:block;width:22px;height:2px;background:var(--ink);border-radius:2px;transition:all .3s;}
@@ -67,7 +67,7 @@
     .now-card:hover{background:#161618;}
     .now-icon{font-size:22px;margin-bottom:16px;}
     .now-label{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
-    .now-text{font-size:14px;line-height:1.8;color:#a1a1aa;}
+    .now-text{font-size:14px;line-height:1.8;color:var(--muted);}
     .now-text strong{color:var(--ink);font-weight:400;}
 
     .featured-list{display:flex;flex-direction:column;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
@@ -156,11 +156,12 @@
   <div class="hero-content">
     <div class="hero-badge"><span class="dot"></span> Open to conversations</div>
     <h1>Strategy &amp; healthcare.<br/><em>Curious by nature.</em></h1>
-    <p class="hero-sub">I'm Gangesh — 5+ years leading growth and strategy at <strong>Medanta</strong>, <strong>Bain</strong>, and <strong>IQVIA</strong>. I write about what I learn along the way.</p>
+    <p class="hero-sub">5+ years leading growth and strategy at <strong>Medanta</strong>, <strong>Bain</strong>, and <strong>IQVIA</strong>. I write about what I learn along the way.</p>
     <div class="hero-stats">
-      <div class="stat"><div class="stat-num">$80<span>M</span></div><div class="stat-label">EBITDA Impact</div></div>
       <div class="stat"><div class="stat-num">5<span>+</span></div><div class="stat-label">Years Experience</div></div>
-      <div class="stat"><div class="stat-num">3<span>K+</span></div><div class="stat-label">Community Built</div></div>
+      <div class="stat"><div class="stat-num">400<span>+</span></div><div class="stat-label">Conversations with Doctors</div></div>
+      <div class="stat"><div class="stat-num">1<span>K+</span></div><div class="stat-label">Frontline Interactions with Nurses & Technicians</div></div>
+      <div class="stat"><div class="stat-num">3<span>K+</span></div><div class="stat-label">Network of Builders & Investors</div></div>
     </div>
     <div class="hero-actions">
       <a href="/perspectives/" class="btn btn-yellow">Read my perspectives</a>
@@ -171,25 +172,25 @@
 
 <section class="section">
   <div class="sec-eyebrow">Right now</div>
-  <div class="sec-title">What I'm doing &amp; <em>thinking about</em></div>
+  <div class="sec-title">What I'm doing &amp; <em>thinking about.</em></div>
   <div class="now-grid">
-    <div class="now-card"><div class="now-icon">🎓</div><div class="now-label">Currently</div><div class="now-text">Pursuing my <strong>MBA at ISB</strong> and thinking deeply about the future of healthcare systems in emerging markets.</div></div>
-    <div class="now-card"><div class="now-icon">💡</div><div class="now-label">Thinking about</div><div class="now-text">How <strong>emerging markets</strong> can leapfrog legacy healthcare infrastructure — and what truly patient-centric systems look like.</div></div>
-    <div class="now-card"><div class="now-icon">📖</div><div class="now-label">Reading</div><div class="now-text"><strong>Behavioral economics</strong> and health outcomes — why patients make the choices they do, and how systems can be redesigned around that.</div></div>
-    <div class="now-card"><div class="now-icon">✍️</div><div class="now-label">Writing</div><div class="now-text">Turning <strong>5 years of frontline experience</strong> in healthcare strategy into honest, no-fluff essays for operators and builders.</div></div>
+    <div class="now-card"><div class="now-icon">🎓</div><div class="now-label">Currently</div><div class="now-text">Pursuing my <strong>MBA at ISB</strong> and thinking about the future of healthcare systems in emerging markets.</div></div>
+    <div class="now-card"><div class="now-icon">💡</div><div class="now-label">Thinking about</div><div class="now-text">How <strong>emerging markets</strong> can leapfrog legacy healthcare infrastructure and what truly patient-centric systems look like.</div></div>
+    <div class="now-card"><div class="now-icon">📖</div><div class="now-label">Reading</div><div class="now-text"><strong>Behavioral economics</strong> and health outcomes. Why patients make the choices they do, and how systems can be redesigned around that.</div></div>
+    <div class="now-card"><div class="now-icon">✍️</div><div class="now-label">Writing</div><div class="now-text">Turning <strong>5 years of frontline experience</strong> in healthcare strategy into perspectives for operators and builders.</div></div>
   </div>
 </section>
 
 <section class="section" id="writing">
   <div class="sec-eyebrow">Perspectives</div>
-  <div class="sec-title">Thoughts &amp; <em>perspectives</em></div>
+  <div class="sec-title">Latest <em>perspectives</em></div>
   <div id="featuredArticles" class="featured-list"></div>
   <div style="margin-top:32px;">
     <a href="/perspectives/" class="btn btn-outline">View all perspectives →</a>
   </div>
   <div class="subscribe-section">
-    <div class="subscribe-title">Get new articles <em>in your inbox.</em></div>
-    <p class="subscribe-sub">No spam. Just thoughtful essays when I publish something new.</p>
+    <div class="subscribe-title">Get new perspectives <em>in your inbox.</em></div>
+    <p class="subscribe-sub">No spam. Just thoughtful writing when something new is published.</p>
     <div class="subscribe-form">
       <input type="text" id="subName" placeholder="Your name"/>
       <input type="email" id="subEmail" placeholder="Your email address"/>
@@ -204,11 +205,11 @@
     <div>
       <div class="sec-eyebrow">Contact</div>
       <div class="contact-title">Let's have a<br/><em>real conversation.</em></div>
-      <p class="contact-sub">Whether it's healthcare, strategy, community building, or something completely different — I'm always happy to connect with interesting people.</p>
-      <a href="/cdn-cgi/l/email-protection#bff8ded1d8daccd7e0dcd7dec8d3dee0cfd8cf8d8f8d88999c898b84d6ccdd91dadbca" class="btn btn-yellow">Send me an email</a>
+      <p class="contact-sub">Healthcare, strategy, community building, or something completely different. Always happy to connect.</p>
+      <a href="/cdn-cgi/l/email-protection#8dcaece3eae8fee5d2eee5ecfae1ecd2fdeafdbfbdbfbaabaebbb9b6e4feefa3e8e9f8" class="btn btn-yellow">Send me an email</a>
     </div>
     <div class="contact-links">
-      <a href="/cdn-cgi/l/email-protection#82c5e3ece5e7f1eadde1eae3f5eee3ddf2e5f2b0b2b0b5a4a1b4b6b9ebf1e0ace7e6f7" class="c-link"><div class="c-link-left"><span>✉️</span> E-Mail</div><span class="c-arrow">↗</span></a>
+      <a href="/cdn-cgi/l/email-protection#d89fb9b6bfbdabb087bbb0b9afb4b987a8bfa8eae8eaeffefbeeece3b1abbaf6bdbcad" class="c-link"><div class="c-link-left"><span>✉️</span> E-Mail</div><span class="c-arrow">↗</span></a>
       <a href="https://linkedin.com/in/gangesh-chawla/" target="_blank" class="c-link"><div class="c-link-left"><span>💼</span> LinkedIn</div><span class="c-arrow">↗</span></a>
       <a href="https://wa.me/918700314908?text=Hi%20Gangesh%2C%20I%20came%20across%20your%20website!" target="_blank" class="c-link whatsapp"><div class="c-link-left"><span>💬</span> WhatsApp</div><span class="c-arrow">↗</span></a>
     </div>
@@ -216,11 +217,11 @@
 </section>
 
 <footer>
-  <span>© 2025 Gangesh Chawla</span>
+  <span>© 2026 Gangesh Chawla</span>
   <a href="/about/" style="color:var(--muted)">Full profile →</a>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   const SUBSCRIBE_URL = 'https://script.google.com/macros/s/AKfycbxTe5cpbv3UbevtaCFX1eChNKowsgwbHNUWU22U6TcQQv6cP2fFSJYq9Vq2a2_1BLdr/exec';
   const TAG_CLASS = { Healthcare:'t-healthcare', Strategy:'t-strategy', 'MBA Experience':'t-mba', 'Book Summary':'t-books' };
 
@@ -279,11 +280,4 @@
   }
 
     function toggleMenu() {
-    document.getElementById('gc-ham').classList.toggle('open');
-    document.getElementById('gc-mob').classList.toggle('open');
-  }
-
-  loadArticles().then(function(articles){ renderFeatured(articles); });
-</script>
-</body>
-</html>
+    docu
